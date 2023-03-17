@@ -6,6 +6,7 @@ import { ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloDriver } from '@nestjs/apollo/dist/drivers';
 import { join } from 'path';
 import { UserModule } from './user/user.module';
+import { User } from './user/entities/user.entity';
 
 
 @Module({
@@ -16,7 +17,7 @@ import { UserModule } from './user/user.module';
       synchronize:true,
       useUnifiedTopology:true,
       entities: [
-
+        User
       ]
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -26,7 +27,6 @@ import { UserModule } from './user/user.module';
     UserModule,
 
   ],
-  controllers: [],
-  providers: [],
+  
 })
 export class AppModule {}

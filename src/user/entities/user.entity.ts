@@ -1,7 +1,33 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Entity, PrimaryColumn, Column, ObjectIdColumn } from  'typeorm';
 
-@ObjectType()
-export class User {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+
+@Entity()
+export class User{
+    @ObjectIdColumn()
+    _id: string;
+    
+    @PrimaryColumn()
+    id: string;
+
+    @Column()
+    firstName: string;
+
+    @Column()
+    lastName:string;
+
+    @Column()
+    email:string;
+
+    @Column()
+    password: string;
+
+    @Column()
+    gender:string;
+
+    @Column()
+    role: string;
+
+    @Column()
+    DOB: Date;
+
 }
