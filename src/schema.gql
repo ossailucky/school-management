@@ -10,9 +10,19 @@ type user {
   role: String!
 }
 
+type auth {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  role: String!
+  access_token: String!
+}
+
 type Query {
   getAllUsers: [user!]!
   user(id: Int!): user!
+  login(email: String!, password: String!): auth!
 }
 
 type Mutation {

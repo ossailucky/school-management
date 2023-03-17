@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
+import { AuthDTO } from 'src/auth/dto/auth.user';
 
 @Injectable()
 export class UserService {
@@ -25,6 +26,11 @@ export class UserService {
 
 
     return await this.userRepository.save(user);
+  }
+
+  async getUserdata(user: AuthDTO): Promise<User>{
+    const { email } = user
+    return await this.userRepository.findOneBy({email:email});
   }
 
   async getAllUsers(): Promise<User[]> {

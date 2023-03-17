@@ -7,6 +7,8 @@ import { ApolloDriver } from '@nestjs/apollo/dist/drivers';
 import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
+import { AuthModule } from './auth/auth.module';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 
 @Module({
@@ -25,8 +27,10 @@ import { User } from './user/entities/user.entity';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql')
     }),
     UserModule,
+    AuthModule,
 
   ],
+  providers:[JwtStrategy]
   
 })
 export class AppModule {}
