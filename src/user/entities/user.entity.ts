@@ -31,3 +31,11 @@ export class User{
     DOB: Date;
 
 }
+
+export enum Role {
+    ADMIN = "admin",
+    TEACHER = "teacher",
+    PARENT = "parent",
+    STUDENT = "student",
+    SECRETARY = "secretary"
+  }

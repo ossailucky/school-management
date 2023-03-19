@@ -5,7 +5,10 @@ import { UserType } from './entities/user.type';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { UseGuards } from '@nestjs/common';
-import { GqlAuthGuard } from 'src/auth/jwt-auth-guard';
+import { GqlAuthGuard } from 'src/auth/guards/jwt-auth-guard';
+import { hasRoles } from 'src/auth/decorators/roles.decorators';
+import { RolesGuard } from 'src/auth/guards/roles.guards';
+import { Role } from './entities/user.entity';
 
 @Resolver(() => UserType)
 export class UserResolver {
@@ -17,7 +20,8 @@ export class UserResolver {
   }
 
   @Query(returns => [UserType])
- @UseGuards(GqlAuthGuard)
+  @UseGuards(GqlAuthGuard,RolesGuard)
+  @hasRoles(Role.ADMIN)
   getAllUsers() {
     return this.userService.getAllUsers();
   }

@@ -5,7 +5,8 @@ import { UserModule } from 'src/user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import "dotenv/config"
-import { GqlAuthGuard } from './jwt-auth-guard';
+import { GqlAuthGuard } from './guards/jwt-auth-guard';
+import { RolesGuard } from './guards/roles.guards';
 
 
 @Module({
@@ -17,6 +18,6 @@ import { GqlAuthGuard } from './jwt-auth-guard';
       signOptions:{expiresIn: "60m"},
     })
   ],
-  providers: [AuthResolver, AuthService,GqlAuthGuard]
+  providers: [AuthResolver, AuthService,GqlAuthGuard,RolesGuard]
 })
 export class AuthModule {}

@@ -8,7 +8,7 @@ import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
-import { JwtStrategy } from './auth/jwt.strategy';
+import { JwtStrategy } from './auth/guards/jwt.strategy';
 
 
 @Module({
