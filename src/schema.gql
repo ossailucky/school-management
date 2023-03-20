@@ -21,7 +21,7 @@ type auth {
 
 type Query {
   getAllUsers: [user!]!
-  user(id: Int!): user!
+  user: user!
   login(email: String!, password: String!): auth!
 }
 
