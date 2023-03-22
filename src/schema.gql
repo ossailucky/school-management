@@ -36,6 +36,8 @@ input CreateUserInput {
   lastName: String!
   email: String!
   password: String!
+  role: String!
+  gender: String!
 }
 
 input UpdateUserInput {
@@ -43,5 +45,7 @@ input UpdateUserInput {
   lastName: String
   email: String
   password: String
+  role: String
+  gender: String
   id: Int!
 }

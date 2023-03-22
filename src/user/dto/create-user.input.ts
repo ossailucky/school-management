@@ -4,21 +4,30 @@ import { MinLength, IsEmail, IsNotEmpty } from 'class-validator';
 @InputType()
 export class CreateUserInput {
   @Field()
+  @IsNotEmpty({message:"first name Field cannot be empty"})
   @MinLength(2)
   firstName: string;
 
   @Field()
-  @IsNotEmpty()
+  @IsNotEmpty({message:"last name Field cannot be empty"})
   @MinLength(2)
   lastName: string;
 
   @Field()
-  @IsNotEmpty()
+  @IsNotEmpty({message:"Email Field cannot be empty"})
   @IsEmail()
   email: string;
 
   @Field()
-  @IsNotEmpty()
+  @IsNotEmpty({message:"password Field is required"})
   @MinLength(8)
   password: string;
+
+  @Field()
+  @IsNotEmpty({message:"User role Field cannot be empty"})
+  role:string;
+
+  @Field()
+  @IsNotEmpty({message:"Gender Field cannot be empty"})
+  gender: string;
 }

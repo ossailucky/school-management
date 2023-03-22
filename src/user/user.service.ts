@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ObjectID, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 import { CreateUserInput } from './dto/create-user.input';
@@ -12,7 +12,7 @@ import { AuthDTO } from 'src/auth/dto/auth.user';
 export class UserService {
   constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
   async create(createUserInput: CreateUserInput): Promise<User> {
-    const { firstName, lastName, email, password} = createUserInput;
+    const { firstName, lastName, email, password, role, gender} = createUserInput;
 
     const hashPassword : string = await bcrypt.hash(password,10);
 
@@ -21,7 +21,9 @@ export class UserService {
       firstName:firstName,
       lastName:lastName,
       email:email,
-      password:hashPassword
+      password:hashPassword,
+      role: role,
+      gender: gender
     });
 
 
@@ -37,6 +39,12 @@ export class UserService {
     return await this.userRepository.find();
   }
 
+  // async assignRole(id:string, role:"hgdhjdsj"): Promise<any>{
+  //   const userRole = await this.userRepository.update({id:id},{role:role});
+
+  //   const check = userRole? "user role assigned successfully": "Problem assigning user role"
+  //   return check;
+  // }
   findOne(id: number) {
     return `This action returns a #${id} user`;
   }
