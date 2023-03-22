@@ -16,6 +16,7 @@ export class AuthResolver {
     @Args({name: "password", type: () => String}) password: string
   ){
     const info = await this.authService.validate({email,password});
+
     const{ user, acces_token} = info;
     const returnInfo = {
       firstName:user.firstName,

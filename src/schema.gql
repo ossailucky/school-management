@@ -8,6 +8,9 @@ type user {
   lastName: String!
   email: String!
   role: String!
+  DOB: String!
+  studentClass: String!
+  subjects: String!
 }
 
 type auth {
@@ -21,13 +24,13 @@ type auth {
 
 type Query {
   getAllUsers: [user!]!
-  user: user!
+  findOne(id: String!): user!
   login(email: String!, password: String!): auth!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): user!
-  updateUser(updateUserInput: UpdateUserInput!): user!
+  updateUser(id: String!, updateUserInput: UpdateUserInput!): String!
   removeUser(id: Int!): user!
 }
 
@@ -47,5 +50,7 @@ input UpdateUserInput {
   password: String
   role: String
   gender: String
-  id: Int!
+  DOB: String
+  subjects: ID
+  studentClass: String
 }

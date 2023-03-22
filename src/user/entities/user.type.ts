@@ -13,4 +13,13 @@ export class UserType {
   @Field()
   role: string;
 
+  @Field()
+  DOB:string;
+
+  @Field()
+  studentClass:string;
+
+  @Field()
+  subjects:string;
+
 }

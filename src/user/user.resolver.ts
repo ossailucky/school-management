@@ -29,17 +29,21 @@ export class UserResolver {
     return this.userService.getAllUsers();
   }
 
-  @Query(returns => UserType, { name: 'user' })
+  @Query(returns => UserType)
   @UseGuards(GqlAuthGuard)
-  findOne(@CurrentUser() user:User) {
-    return user;
+  async findOne(@CurrentUser() user:User, @Args("id") id:string) {
+    return await this.userService.findOne(id) ;
   }
 
   
 
-  @Mutation(() => UserType)
-  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    return this.userService.update(updateUserInput.id, updateUserInput);
+  @Mutation(returns => String)
+  @UseGuards(GqlAuthGuard)
+  updateUser(
+    @Args('id') id: string,
+    @Args('updateUserInput') updateUserInput: UpdateUserInput
+    ) {
+    return this.userService.update(id, updateUserInput);
   }
 
   @Mutation(() => UserType)

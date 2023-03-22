@@ -38,19 +38,16 @@ export class UserService {
   async getAllUsers(): Promise<User[]> {
     return await this.userRepository.find();
   }
-
-  // async assignRole(id:string, role:"hgdhjdsj"): Promise<any>{
-  //   const userRole = await this.userRepository.update({id:id},{role:role});
-
-  //   const check = userRole? "user role assigned successfully": "Problem assigning user role"
-  //   return check;
-  // }
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  
+ async findOne(id: string): Promise<User>{
+    return await this.userRepository.findOneBy({id:id});
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserInput: UpdateUserInput): Promise<String> {
+    const userRole = await this.userRepository.update({id:id},updateUserInput);
+
+    const check = userRole? "user Info was successfully updated": "Problem updating user info";
+    return check
   }
 
   remove(id: number) {

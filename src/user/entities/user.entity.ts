@@ -28,7 +28,13 @@ export class User{
     role: string;
 
     @Column()
-    DOB: Date;
+    DOB: string;
+
+    @Column()
+    studentClass:string;
+
+    @Column()
+    subjects:string[];
 
 }
 
