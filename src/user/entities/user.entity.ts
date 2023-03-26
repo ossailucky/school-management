@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Column, ObjectIdColumn } from  'typeorm';
+import { Entity, PrimaryColumn, Column, ObjectIdColumn, DeleteDateColumn } from  'typeorm';
 
 
 @Entity()
@@ -35,6 +35,9 @@ export class User{
 
     @Column()
     subjects:string[];
+
+    @DeleteDateColumn()
+    deletedAt: Date;
 
 }
 

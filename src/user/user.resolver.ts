@@ -46,8 +46,17 @@ export class UserResolver {
     return this.userService.update(id, updateUserInput);
   }
 
-  @Mutation(() => UserType)
-  removeUser(@Args('id', { type: () => Int }) id: number) {
-    return this.userService.remove(id);
+  @UseGuards(GqlAuthGuard)
+  @hasRoles(Role.ADMIN,Role.SECRETARY)
+  @Mutation(returns => String)
+  async removeUser(@Args('id') id: string) {
+    return await this.userService.remove(id);
   }
+
+  // @UseGuards(GqlAuthGuard)
+  // @hasRoles(Role.ADMIN,Role.SECRETARY)
+  // @Mutation(returns => String)
+  // async restoreUser(@Args("id") id: string){
+  //   return await this.userService.restore(id);
+  // }
 }

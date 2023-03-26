@@ -50,7 +50,16 @@ export class UserService {
     return check
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string): Promise<String> {
+    const user = await this.userRepository.findOneBy({id:id});
+    if(user){
+      const softDelete = await this.userRepository.softRemove(user);
+      return softDelete? "user Info was Partially remove": "Problem removing user info";
+    }
+  }
+
+  async restore(id: string): Promise<String> {
+   const restoreUser = await this.userRepository.restore(id);
+   return restoreUser? "user Info was successfully restored": "Problem restoring user info";
   }
 }
