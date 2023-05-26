@@ -22,16 +22,27 @@ type auth {
   access_token: String!
 }
 
+type classroom {
+  id: ID!
+  className: String!
+  classSubjects: String!
+  students: String!
+}
+
 type Query {
   getAllUsers: [user!]!
   findOne(id: String!): user!
   login(email: String!, password: String!): auth!
+  classroom(id: Int!): classroom!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): user!
   updateUser(id: String!, updateUserInput: UpdateUserInput!): String!
   removeUser(id: String!): String!
+  createClassRoom(createClassRoomInput: CreateClassRoomInput!): classroom!
+  updateClassRoom(updateClassRoomInput: UpdateClassRoomInput!): classroom!
+  removeClassRoom(id: Int!): classroom!
 }
 
 input CreateUserInput {
@@ -53,4 +64,13 @@ input UpdateUserInput {
   DOB: String
   subjects: ID
   studentClass: String
+}
+
+input CreateClassRoomInput {
+  className: String!
+}
+
+input UpdateClassRoomInput {
+  className: String
+  id: Int!
 }

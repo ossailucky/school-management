@@ -9,6 +9,8 @@ import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from './auth/guards/jwt.strategy';
+import { ClassRoomModule } from './class-room/class-room.module';
+import { ClassRoom } from './class-room/entities/class-room.entity';
 
 
 @Module({
@@ -19,7 +21,8 @@ import { JwtStrategy } from './auth/guards/jwt.strategy';
       synchronize:true,
       useUnifiedTopology:true,
       entities: [
-        User
+        User,
+        ClassRoom
       ]
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -28,6 +31,7 @@ import { JwtStrategy } from './auth/guards/jwt.strategy';
     }),
     UserModule,
     AuthModule,
+    ClassRoomModule,
 
   ],
   providers:[JwtStrategy]
