@@ -26,7 +26,7 @@ type classroom {
   id: ID!
   className: String!
   classSubjects: String!
-  students: String!
+  students: [user!]!
 }
 
 type Query {
@@ -68,9 +68,14 @@ input UpdateUserInput {
 
 input CreateClassRoomInput {
   className: String!
+  classSubjects: [String!]! = []
+  students: [ID!]! = []
 }
 
 input UpdateClassRoomInput {
   className: String
-  id: Int!
+  classSubjects: [String!]
+  students: [ID!] = []
+  id: ID!
+  studentsId: [ID!]
 }

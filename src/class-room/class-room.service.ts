@@ -5,18 +5,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ClassRoom } from './entities/class-room.entity';
 import { Repository } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import { log } from 'console';
 
 
 @Injectable()
 export class ClassRoomService {
   constructor(@InjectRepository(ClassRoom) private classRoomRespository:Repository<ClassRoom>) {}
- async create(createClassRoomInput: CreateClassRoomInput) : Promise<ClassRoom> {
+  async create(createClassRoomInput: CreateClassRoomInput) : Promise<ClassRoom> {
 
-    const { className} = createClassRoomInput;
+    const { className, classSubjects, students} = createClassRoomInput;
 
     const classRoom = this.classRoomRespository.create({
       id: uuid(),
-      className: className
+      className: className,
+      classSubjects: classSubjects,
+      students: students
     });
     return await this.classRoomRespository.save(classRoom);
   }
@@ -29,8 +32,17 @@ export class ClassRoomService {
     return `This action returns a #${id} classRoom`;
   }
 
-  update(id: number, updateClassRoomInput: UpdateClassRoomInput) {
-    return `This action updates a #${id} classRoom`;
+  async assignStudentAClass(id:string,studentsId: string[]): Promise<ClassRoom>{
+
+
+    const classRoom = await this.classRoomRespository.findOneBy({id: id});
+
+
+    classRoom.students = [...classRoom.students, ...studentsId];
+
+
+
+    return await this.classRoomRespository.save(classRoom);
   }
 
   remove(id: number) {

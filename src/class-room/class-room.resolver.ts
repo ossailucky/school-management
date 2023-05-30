@@ -10,14 +10,14 @@ import { Role } from 'src/user/entities/user.entity';
 import { GqlAuthGuard } from 'src/auth/guards/jwt-auth-guard';
 import { hasRoles } from 'src/auth/decorators/roles.decorators';
 
-@Resolver(() => ClassRoomType)
+@Resolver(of => ClassRoomType)
 export class ClassRoomResolver {
   constructor(private readonly classRoomService: ClassRoomService) {}
 
   @UseGuards(GqlAuthGuard, RolesGuard)
   @hasRoles(Role.ADMIN, Role.SECRETARY)
-  @Mutation((returns) => ClassRoomType)
-  createClassRoom(@Args('createClassRoomInput') createClassRoomInput: CreateClassRoomInput) {
+  @Mutation(returns => ClassRoomType)
+  createClassRoom(@Args('createClassRoomInput') createClassRoomInput: CreateClassRoomInput,) {
     return this.classRoomService.create(createClassRoomInput);
   }
 
@@ -33,7 +33,7 @@ export class ClassRoomResolver {
 
   @Mutation(() => ClassRoomType)
   updateClassRoom(@Args('updateClassRoomInput') updateClassRoomInput: UpdateClassRoomInput) {
-    return this.classRoomService.update(updateClassRoomInput.id, updateClassRoomInput);
+    return this.classRoomService.assignStudentAClass(updateClassRoomInput.id, updateClassRoomInput.studentsId);
   }
 
   @Mutation(() => ClassRoomType)

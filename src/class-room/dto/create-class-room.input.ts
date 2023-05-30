@@ -1,16 +1,18 @@
 import { InputType, Int, Field, ID } from '@nestjs/graphql';
-import { MinLength, IsEmail, IsNotEmpty, IsUUID } from 'class-validator';
+import { MinLength, IsNotEmpty, IsUUID } from 'class-validator';
 
 @InputType()
 export class CreateClassRoomInput {
   @Field()
+  @MinLength(1)
   @IsNotEmpty({message: "class Name cannot be empty"})
   className: string;
 
-  // @Field(() => [String])
-  // classSubjects: string[];
+  @Field(() => [String],{defaultValue: [] })
+  classSubjects: string[];
 
-  // @IsUUID("4", { each: true })
-  //   @Field(() => [ID], { defaultValue: [] })
-  //   students: string[];
+  @IsUUID("4", { each: true })
+    @Field(() => [ID], {defaultValue: [] })
+    students: string[];
+
 }
