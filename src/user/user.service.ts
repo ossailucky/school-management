@@ -62,4 +62,15 @@ export class UserService {
    const restoreUser = await this.userRepository.restore(id);
    return restoreUser? "user Info was successfully restored": "Problem restoring user info";
   }
+
+  async getManyStudents(studentIds:string[]): Promise<User[]>{
+    return await this.userRepository.find({
+      where:{
+        id: {
+          //@ts-ignore
+          $in: studentIds
+        }
+      }
+    })
+  }
 }

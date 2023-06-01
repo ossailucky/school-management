@@ -33,7 +33,8 @@ type Query {
   getAllUsers: [user!]!
   findOne(id: String!): user!
   login(email: String!, password: String!): auth!
-  classroom(id: Int!): classroom!
+  classroom: [classroom!]!
+  ClassRoom(id: String!): classroom!
 }
 
 type Mutation {

@@ -28,8 +28,8 @@ export class ClassRoomService {
     return `This action returns all classRoom`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} classRoom`;
+ async findOne(id: string): Promise<ClassRoom> {
+    return await this.classRoomRespository.findOneBy({id});
   }
 
   async assignStudentAClass(id:string,studentsId: string[]): Promise<ClassRoom>{

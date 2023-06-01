@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
 import { ClassRoomService } from './class-room.service';
 import { ClassRoom } from './entities/class-room.entity';
 import { CreateClassRoomInput } from './dto/create-class-room.input';
@@ -9,10 +9,14 @@ import { RolesGuard } from 'src/auth/guards/roles.guards';
 import { Role } from 'src/user/entities/user.entity';
 import { GqlAuthGuard } from 'src/auth/guards/jwt-auth-guard';
 import { hasRoles } from 'src/auth/decorators/roles.decorators';
+import { UserService } from 'src/user/user.service';
 
 @Resolver(of => ClassRoomType)
 export class ClassRoomResolver {
-  constructor(private readonly classRoomService: ClassRoomService) {}
+  constructor(
+    private readonly classRoomService: ClassRoomService,
+    private userService:UserService
+    ) {}
 
   @UseGuards(GqlAuthGuard, RolesGuard)
   @hasRoles(Role.ADMIN, Role.SECRETARY)
@@ -22,15 +26,17 @@ export class ClassRoomResolver {
   }
 
   @Query(returns => [ClassRoomType], { name: 'classroom' })
-  findAll() {
+  AllClassRoom() {
     return this.classRoomService.findAll();
   }
 
-  @Query(returns => ClassRoomType, { name: 'classroom' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(returns => ClassRoomType)
+  ClassRoom(@Args('id') id:string) {
     return this.classRoomService.findOne(id);
   }
 
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Mutation(() => ClassRoomType)
   updateClassRoom(@Args('updateClassRoomInput') updateClassRoomInput: UpdateClassRoomInput) {
     return this.classRoomService.assignStudentAClass(updateClassRoomInput.id, updateClassRoomInput.studentsId);
@@ -39,5 +45,10 @@ export class ClassRoomResolver {
   @Mutation(() => ClassRoomType)
   removeClassRoom(@Args('id', { type: () => Int }) id: number) {
     return this.classRoomService.remove(id);
+  }
+
+  @ResolveField()
+  async students(@Parent() classRoom: ClassRoom){
+    return await this.userService.getManyStudents(classRoom.students);
   }
 }
