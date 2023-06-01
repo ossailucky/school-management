@@ -25,7 +25,7 @@ export class ClassRoomResolver {
     return this.classRoomService.create(createClassRoomInput);
   }
 
-  @Query(returns => [ClassRoomType], { name: 'classroom' })
+  @Query(returns => [ClassRoomType])
   AllClassRoom() {
     return this.classRoomService.findAll();
   }
@@ -51,4 +51,5 @@ export class ClassRoomResolver {
   async students(@Parent() classRoom: ClassRoom){
     return await this.userService.getManyStudents(classRoom.students);
   }
+
 }

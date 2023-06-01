@@ -24,8 +24,8 @@ export class ClassRoomService {
     return await this.classRoomRespository.save(classRoom);
   }
 
-  findAll() {
-    return `This action returns all classRoom`;
+ async findAll(): Promise<ClassRoom[]> {
+    return await this.classRoomRespository.find();
   }
 
  async findOne(id: string): Promise<ClassRoom> {

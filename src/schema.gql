@@ -33,7 +33,7 @@ type Query {
   getAllUsers: [user!]!
   findOne(id: String!): user!
   login(email: String!, password: String!): auth!
-  classroom: [classroom!]!
+  AllClassRoom: [classroom!]!
   ClassRoom(id: String!): classroom!
 }
 
