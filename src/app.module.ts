@@ -11,6 +11,14 @@ import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from './auth/guards/jwt.strategy';
 import { ClassRoomModule } from './class-room/class-room.module';
 import { ClassRoom } from './class-room/entities/class-room.entity';
+import { SubjectModule } from './subject/subject.module';
+import { StudentsModule } from './students/students.module';
+import { TeachersModule } from './teachers/teachers.module';
+import { ParentsModule } from './parents/parents.module';
+import { AuthStudentsModule } from './auth-students/auth-students.module';
+import { AuthParentsModule } from './auth-parents/auth-parents.module';
+import { AuthTeachersModule } from './auth-teachers/auth-teachers.module';
+import { Student } from './students/entities/student.entity';
 
 
 @Module({
@@ -22,7 +30,8 @@ import { ClassRoom } from './class-room/entities/class-room.entity';
       useUnifiedTopology:true,
       entities: [
         User,
-        ClassRoom
+        ClassRoom,
+        Student
       ]
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -32,6 +41,13 @@ import { ClassRoom } from './class-room/entities/class-room.entity';
     UserModule,
     AuthModule,
     ClassRoomModule,
+    SubjectModule,
+    StudentsModule,
+    TeachersModule,
+    ParentsModule,
+    AuthStudentsModule,
+    AuthParentsModule,
+    AuthTeachersModule,
 
   ],
   providers:[JwtStrategy]

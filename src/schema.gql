@@ -29,12 +29,65 @@ type classroom {
   students: [user!]!
 }
 
+type Subject {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type student {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  role: String!
+  studentClass: String!
+  subjects: String!
+  parents: String!
+  teachers: String!
+}
+
+type Teacher {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Parent {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type AuthStudent {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type AuthParent {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type AuthTeacher {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   getAllUsers: [user!]!
   findOne(id: String!): user!
   login(email: String!, password: String!): auth!
   AllClassRoom: [classroom!]!
   ClassRoom(id: String!): classroom!
+  subject(id: Int!): Subject!
+  teachers: [Teacher!]!
+  teacher(id: Int!): Teacher!
+  parents: [Parent!]!
+  parent(id: Int!): Parent!
+  authStudents: [AuthStudent!]!
+  authStudent(id: Int!): AuthStudent!
+  authParents: [AuthParent!]!
+  authParent(id: Int!): AuthParent!
+  authTeachers: [AuthTeacher!]!
+  authTeacher(id: Int!): AuthTeacher!
 }
 
 type Mutation {
@@ -44,6 +97,25 @@ type Mutation {
   createClassRoom(createClassRoomInput: CreateClassRoomInput!): classroom!
   updateClassRoom(updateClassRoomInput: UpdateClassRoomInput!): classroom!
   removeClassRoom(id: Int!): classroom!
+  createSubject(createSubjectInput: CreateSubjectInput!): Subject!
+  updateSubject(updateSubjectInput: UpdateSubjectInput!): Subject!
+  removeSubject(id: Int!): Subject!
+  createStudent(createStudentInput: CreateStudentInput!): student!
+  createTeacher(createTeacherInput: CreateTeacherInput!): Teacher!
+  updateTeacher(updateTeacherInput: UpdateTeacherInput!): Teacher!
+  removeTeacher(id: Int!): Teacher!
+  createParent(createParentInput: CreateParentInput!): Parent!
+  updateParent(updateParentInput: UpdateParentInput!): Parent!
+  removeParent(id: Int!): Parent!
+  createAuthStudent(createAuthStudentInput: CreateAuthStudentInput!): AuthStudent!
+  updateAuthStudent(updateAuthStudentInput: UpdateAuthStudentInput!): AuthStudent!
+  removeAuthStudent(id: Int!): AuthStudent!
+  createAuthParent(createAuthParentInput: CreateAuthParentInput!): AuthParent!
+  updateAuthParent(updateAuthParentInput: UpdateAuthParentInput!): AuthParent!
+  removeAuthParent(id: Int!): AuthParent!
+  createAuthTeacher(createAuthTeacherInput: CreateAuthTeacherInput!): AuthTeacher!
+  updateAuthTeacher(updateAuthTeacherInput: UpdateAuthTeacherInput!): AuthTeacher!
+  removeAuthTeacher(id: Int!): AuthTeacher!
 }
 
 input CreateUserInput {
@@ -79,4 +151,80 @@ input UpdateClassRoomInput {
   students: [ID!] = []
   id: ID!
   studentsId: [ID!]
+}
+
+input CreateSubjectInput {
+  subjectName: String!
+  students: [ID!]! = []
+}
+
+input UpdateSubjectInput {
+  subjectName: String
+  students: [ID!] = []
+  id: Int!
+}
+
+input CreateStudentInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  role: String!
+  gender: String!
+  studentClass: String!
+}
+
+input CreateTeacherInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateTeacherInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateParentInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateParentInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateAuthStudentInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateAuthStudentInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateAuthParentInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateAuthParentInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateAuthTeacherInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateAuthTeacherInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
