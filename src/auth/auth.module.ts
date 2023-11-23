@@ -4,7 +4,7 @@ import { AuthResolver } from './auth.resolver';
 import { UserModule } from 'src/user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import "dotenv/config"
+import "dotenv/config";
 import { GqlAuthGuard } from './guards/jwt-auth-guard';
 import { RolesGuard } from './guards/roles.guards';
 

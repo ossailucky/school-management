@@ -1,35 +1,31 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { AuthStudentsService } from './auth-students.service';
-import { AuthStudent } from './entities/auth-student.entity';
-import { CreateAuthStudentInput } from './dto/create-auth-student.input';
-import { UpdateAuthStudentInput } from './dto/update-auth-student.input';
+import { StudentDTO } from './dto/auth-student';
+import { StudentAuthType } from './entities/student-auth.type';
 
-@Resolver(() => AuthStudent)
+@Resolver(of => StudentAuthType)
 export class AuthStudentsResolver {
   constructor(private readonly authStudentsService: AuthStudentsService) {}
 
-  @Mutation(() => AuthStudent)
-  createAuthStudent(@Args('createAuthStudentInput') createAuthStudentInput: CreateAuthStudentInput) {
-    return this.authStudentsService.create(createAuthStudentInput);
+  @Query(eturns => StudentAuthType)
+  async studentLogin( 
+    @Args({name: "email", type: () => String}) email: string,
+    @Args({name: "password", type: () => String}) password: string) {
+     const info = await this.authStudentsService.validate({email,password});
+
+     const { student, acces_token} = info;
+
+     const returnInfo = {
+      firstName:student.firstName,
+      lastName: student.lastName,
+      email: student.email,
+      studentClass: student.studentClass,
+      access_token: acces_token
+    }    
+    return returnInfo;
   }
 
-  @Query(() => [AuthStudent], { name: 'authStudents' })
-  findAll() {
-    return this.authStudentsService.findAll();
-  }
+  
 
-  @Query(() => AuthStudent, { name: 'authStudent' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.authStudentsService.findOne(id);
-  }
-
-  @Mutation(() => AuthStudent)
-  updateAuthStudent(@Args('updateAuthStudentInput') updateAuthStudentInput: UpdateAuthStudentInput) {
-    return this.authStudentsService.update(updateAuthStudentInput.id, updateAuthStudentInput);
-  }
-
-  @Mutation(() => AuthStudent)
-  removeAuthStudent(@Args('id', { type: () => Int }) id: number) {
-    return this.authStudentsService.remove(id);
-  }
+  
 }

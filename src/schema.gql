@@ -56,9 +56,14 @@ type Parent {
   exampleField: Int!
 }
 
-type AuthStudent {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type studentAuth {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  role: String!
+  studentClass: String!
+  access_token: String!
 }
 
 type AuthParent {
@@ -78,12 +83,12 @@ type Query {
   AllClassRoom: [classroom!]!
   ClassRoom(id: String!): classroom!
   subject(id: Int!): Subject!
+  students: [student!]!
   teachers: [Teacher!]!
   teacher(id: Int!): Teacher!
   parents: [Parent!]!
   parent(id: Int!): Parent!
-  authStudents: [AuthStudent!]!
-  authStudent(id: Int!): AuthStudent!
+  studentLogin(email: String!, password: String!): studentAuth!
   authParents: [AuthParent!]!
   authParent(id: Int!): AuthParent!
   authTeachers: [AuthTeacher!]!
@@ -107,9 +112,6 @@ type Mutation {
   createParent(createParentInput: CreateParentInput!): Parent!
   updateParent(updateParentInput: UpdateParentInput!): Parent!
   removeParent(id: Int!): Parent!
-  createAuthStudent(createAuthStudentInput: CreateAuthStudentInput!): AuthStudent!
-  updateAuthStudent(updateAuthStudentInput: UpdateAuthStudentInput!): AuthStudent!
-  removeAuthStudent(id: Int!): AuthStudent!
   createAuthParent(createAuthParentInput: CreateAuthParentInput!): AuthParent!
   updateAuthParent(updateAuthParentInput: UpdateAuthParentInput!): AuthParent!
   removeAuthParent(id: Int!): AuthParent!
@@ -191,17 +193,6 @@ input CreateParentInput {
 }
 
 input UpdateParentInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-input CreateAuthStudentInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateAuthStudentInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!

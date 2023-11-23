@@ -11,7 +11,7 @@ export class UserType {
   @Field()
   lastName:string;
   @Field()
-  
+
   email: string;
   @Field()
   role: string;

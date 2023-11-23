@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthStudentInput } from './dto/create-auth-student.input';
-import { UpdateAuthStudentInput } from './dto/update-auth-student.input';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import * as bcrypt from "bcrypt";
+import { JwtService } from '@nestjs/jwt';
+import { StudentsService } from 'src/students/students.service';
+import { StudentAuthDTO, StudentDTO } from './dto/auth-student';
 
 @Injectable()
 export class AuthStudentsService {
-  create(createAuthStudentInput: CreateAuthStudentInput) {
-    return 'This action adds a new authStudent';
+  constructor(
+    private jwtService: JwtService,
+    private studentService: StudentsService
+  ) {}
+
+  async validate(studentDTO: StudentDTO): Promise<any> {
+
+    const student = await this.studentService.getStudentData(studentDTO);
+    if(!student){
+      throw new NotFoundException();
+    }
+
+    const { password } = studentDTO;
+    const matchedPassord = await bcrypt.compare(password, student.password);
+    
+    if(matchedPassord){
+      const accessToken = await this.getToken({
+        id: student.id,
+        email: student.email
+      });
+      return {
+        student,
+        ...accessToken
+      };
+    }
+    
   }
 
-  findAll() {
-    return `This action returns all authStudents`;
-  }
+  async getToken(student:StudentAuthDTO){
+    return {
+        acces_token :this.jwtService.sign(student)
+    }
+}
 
-  findOne(id: number) {
-    return `This action returns a #${id} authStudent`;
-  }
-
-  update(id: number, updateAuthStudentInput: UpdateAuthStudentInput) {
-    return `This action updates a #${id} authStudent`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} authStudent`;
-  }
+ 
 }

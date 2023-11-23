@@ -9,6 +9,7 @@ import { GqlAuthGuard } from 'src/auth/guards/jwt-auth-guard';
 import { RolesGuard } from 'src/auth/guards/roles.guards';
 import { hasRoles } from 'src/auth/decorators/roles.decorators';
 import { Role } from 'src/user/entities/user.entity';
+import { StudentAuthGuard } from 'src/auth-students/guards/jwt-students-auth-guard';
 
 @Resolver(() => StudentType)
 export class StudentsResolver {
@@ -21,10 +22,11 @@ export class StudentsResolver {
     return this.studentsService.register(createStudentInput);
   }
 
-  // @Query(() => [Student], { name: 'students' })
-  // findAll() {
-  //   return this.studentsService.findAll();
-  // }
+  @UseGuards(StudentAuthGuard)
+  @Query(returns => [StudentType], { name: 'students' })
+  allStudents() {
+    return this.studentsService.getAllStudent();
+  }
 
   // @Query(() => Student, { name: 'student' })
   // findOne(@Args('id', { type: () => Int }) id: number) {

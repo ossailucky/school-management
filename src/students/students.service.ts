@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { Student } from './entities/student.entity';
 import { CreateStudentInput } from './dto/create-student.input';
 import { UpdateStudentInput } from './dto/update-student.input';
+import { StudentDTO } from 'src/auth-students/dto/auth-student';
 
 @Injectable()
 export class StudentsService {
@@ -29,8 +30,15 @@ export class StudentsService {
     return await this.studentRepository.save(student);
   }
 
-  findAll() {
-    return `This action returns all students`;
+  async getStudentData(student: StudentDTO): Promise<Student>{
+    const { email } = student;
+
+    return await this.studentRepository.findOneBy({email:email});
+
+  }
+
+  async getAllStudent(): Promise<Student[]> {
+    return await this.studentRepository.find();
   }
 
   findOne(id: number) {
