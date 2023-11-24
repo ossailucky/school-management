@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { CreateParentInput } from './dto/create-parent.input';
 import { UpdateParentInput } from './dto/update-parent.input';
 import { Parent } from './entities/parent.entity';
+import { ParentAuthDTO } from 'src/auth-parents/dto/auth-parent';
 
 @Injectable()
 export class ParentsService {
@@ -28,6 +29,11 @@ export class ParentsService {
     
 
     return await this.parentRepository.save(parent);
+  }
+
+  async getParentData(parent:ParentAuthDTO): Promise<Parent>{
+    const { email } = parent;
+    return await this.parentRepository.findOneBy({email:email});
   }
 
   findAll() {

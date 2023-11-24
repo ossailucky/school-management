@@ -21,6 +21,7 @@ import { AuthTeachersModule } from './auth-teachers/auth-teachers.module';
 import { Student } from './students/entities/student.entity';
 import { StudentJwtStrategy } from './auth-students/guards/jwt-students-strategy';
 import { Parent } from './parents/entities/parent.entity';
+import { ParentJwtStrategy } from './auth-parents/guards/jwt-parent-strategy';
 
 
 @Module({
@@ -53,7 +54,7 @@ import { Parent } from './parents/entities/parent.entity';
     AuthTeachersModule,
 
   ],
-  providers:[JwtStrategy, StudentJwtStrategy]
+  providers:[JwtStrategy, StudentJwtStrategy, ParentJwtStrategy]
   
 })
 export class AppModule {}
