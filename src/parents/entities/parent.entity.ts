@@ -1,7 +1,38 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Entity, PrimaryColumn, Column, ObjectIdColumn, DeleteDateColumn } from  'typeorm';
 
-@ObjectType()
-export class Parent {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+
+@Entity()
+export class Parent{
+    @ObjectIdColumn()
+    _id: string;
+    
+    @PrimaryColumn()
+    id: string;
+
+    @Column()
+    firstName: string;
+
+    @Column()
+    lastName:string;
+
+    @Column()
+    email:string;
+
+    @Column()
+    password: string;
+
+    @Column()
+    gender:string;
+
+    @Column()
+    role: string;
+
+
+    @Column()
+    children:string[];
+
+    @DeleteDateColumn()
+    deletedAt: Date;
+
 }
+

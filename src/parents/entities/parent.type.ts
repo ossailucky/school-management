@@ -1,7 +1,7 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 
-@ObjectType("user")
-export class UserType {
+@ObjectType("parent")
+export class ParentType {
   @Field(type => ID)
   id: string;
 
@@ -13,17 +13,11 @@ export class UserType {
 
   @Field()
   email: string;
-  
+
   @Field()
   role: string;
 
   @Field()
-  DOB:string;
-
-  @Field()
-  studentClass:string;
-
-  @Field()
-  subjects:string;
+  children:string;
 
 }

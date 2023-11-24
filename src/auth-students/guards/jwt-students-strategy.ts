@@ -5,12 +5,12 @@ import 'dotenv/config';
 import { StudentsService } from 'src/students/students.service';
 
 @Injectable()
-export class StudentJwtStrategy extends PassportStrategy(Strategy) {
+export class StudentJwtStrategy extends PassportStrategy(Strategy, "studentjwt") {
   constructor(private studentService: StudentsService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET,
+      secretOrKey: process.env.STUDENT_SECRET,
     });
   }
 

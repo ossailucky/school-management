@@ -1,11 +1,33 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ObjectID, Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { v4 as uuid } from 'uuid';
 import { CreateParentInput } from './dto/create-parent.input';
 import { UpdateParentInput } from './dto/update-parent.input';
+import { Parent } from './entities/parent.entity';
 
 @Injectable()
 export class ParentsService {
-  create(createParentInput: CreateParentInput) {
-    return 'This action adds a new parent';
+  constructor(@InjectRepository(Parent) private parentRepository: Repository<Parent>) {}
+
+  async registerParent(createParentInput: CreateParentInput): Promise<Parent> {
+    const { firstName, lastName, email, password, role, gender} = createParentInput;
+
+    const hashPassword : string = await bcrypt.hash(password,10);
+
+    const parent = this.parentRepository.create({
+      id: uuid(),
+      firstName:firstName,
+      lastName:lastName,
+      email:email,
+      password:hashPassword,
+      role: role,
+      gender: gender
+    });
+    
+
+    return await this.parentRepository.save(parent);
   }
 
   findAll() {

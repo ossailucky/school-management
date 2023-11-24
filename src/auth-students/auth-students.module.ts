@@ -12,7 +12,7 @@ import { StudentAuthGuard } from './guards/jwt-students-auth-guard';
     StudentsModule,
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      secret: process.env.STUDENT_SECRET,
       signOptions: {expiresIn: "60m"},
     })
   ],

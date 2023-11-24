@@ -20,6 +20,7 @@ import { AuthParentsModule } from './auth-parents/auth-parents.module';
 import { AuthTeachersModule } from './auth-teachers/auth-teachers.module';
 import { Student } from './students/entities/student.entity';
 import { StudentJwtStrategy } from './auth-students/guards/jwt-students-strategy';
+import { Parent } from './parents/entities/parent.entity';
 
 
 @Module({
@@ -32,7 +33,8 @@ import { StudentJwtStrategy } from './auth-students/guards/jwt-students-strategy
       entities: [
         User,
         ClassRoom,
-        Student
+        Student,
+        Parent,
       ]
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({

@@ -1,8 +1,11 @@
+import { IsDateString } from 'class-validator';
 import { CreateParentInput } from './create-parent.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { InputType, Field, Int, PartialType, ID } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateParentInput extends PartialType(CreateParentInput) {
-  @Field(() => Int)
-  id: number;
+  @Field(type=> ID,{nullable:true})
+  children?:string[];
+
+ 
 }

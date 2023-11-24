@@ -3,33 +3,42 @@ import { ParentsService } from './parents.service';
 import { Parent } from './entities/parent.entity';
 import { CreateParentInput } from './dto/create-parent.input';
 import { UpdateParentInput } from './dto/update-parent.input';
+import { ParentType } from './entities/parent.type';
+import { GqlAuthGuard } from 'src/auth/guards/jwt-auth-guard';
+import { RolesGuard } from 'src/auth/guards/roles.guards';
+import { UseGuards } from '@nestjs/common';
+import { hasRoles } from 'src/auth/decorators/roles.decorators';
+import { Role } from 'src/user/entities/user.entity';
 
-@Resolver(() => Parent)
+
+@Resolver(() => ParentType)
 export class ParentsResolver {
   constructor(private readonly parentsService: ParentsService) {}
 
-  @Mutation(() => Parent)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Mutation(returns => ParentType)
   createParent(@Args('createParentInput') createParentInput: CreateParentInput) {
-    return this.parentsService.create(createParentInput);
+    return this.parentsService.registerParent(createParentInput);
   }
 
-  @Query(() => [Parent], { name: 'parents' })
-  findAll() {
-    return this.parentsService.findAll();
-  }
+  // @Query(() => [Parent], { name: 'parents' })
+  // findAll() {
+  //   return this.parentsService.findAll();
+  // }
 
-  @Query(() => Parent, { name: 'parent' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.parentsService.findOne(id);
-  }
+  // @Query(() => Parent, { name: 'parent' })
+  // findOne(@Args('id', { type: () => Int }) id: number) {
+  //   return this.parentsService.findOne(id);
+  // }
 
-  @Mutation(() => Parent)
-  updateParent(@Args('updateParentInput') updateParentInput: UpdateParentInput) {
-    return this.parentsService.update(updateParentInput.id, updateParentInput);
-  }
+  // @Mutation(() => Parent)
+  // updateParent(@Args('updateParentInput') updateParentInput: UpdateParentInput) {
+  //   return this.parentsService.update(updateParentInput.id, updateParentInput);
+  // }
 
-  @Mutation(() => Parent)
-  removeParent(@Args('id', { type: () => Int }) id: number) {
-    return this.parentsService.remove(id);
-  }
+  // @Mutation(() => Parent)
+  // removeParent(@Args('id', { type: () => Int }) id: number) {
+  //   return this.parentsService.remove(id);
+  // }
 }
