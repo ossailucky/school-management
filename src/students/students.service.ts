@@ -41,8 +41,8 @@ export class StudentsService {
     return await this.studentRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} student`;
+  async findOne(id: string): Promise<Student> {
+    return await this.studentRepository.findOneBy({id:id});
   }
 
   update(id: number, updateStudentInput: UpdateStudentInput) {

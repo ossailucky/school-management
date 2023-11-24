@@ -88,6 +88,7 @@ type Query {
   ClassRoom(id: String!): classroom!
   subject(id: Int!): Subject!
   students: [student!]!
+  student(id: String!): student!
   teachers: [Teacher!]!
   teacher(id: Int!): Teacher!
   studentLogin(email: String!, password: String!): studentAuth!

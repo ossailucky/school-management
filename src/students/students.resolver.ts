@@ -28,10 +28,11 @@ export class StudentsResolver {
     return this.studentsService.getAllStudent();
   }
 
-  // @Query(() => Student, { name: 'student' })
-  // findOne(@Args('id', { type: () => Int }) id: number) {
-  //   return this.studentsService.findOne(id);
-  // }
+  @UseGuards(StudentAuthGuard)
+  @Query(returns => StudentType, { name: 'student' })
+  findOne(@Args('id') id: string) {
+    return this.studentsService.findOne(id);
+  }
 
   // @Mutation(() => Student)
   // updateStudent(@Args('updateStudentInput') updateStudentInput: UpdateStudentInput) {
