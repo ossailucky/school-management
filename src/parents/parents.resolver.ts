@@ -9,6 +9,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guards';
 import { UseGuards } from '@nestjs/common';
 import { hasRoles } from 'src/auth/decorators/roles.decorators';
 import { Role } from 'src/user/entities/user.entity';
+import { ParentAuthGuard } from 'src/auth-parents/guards/jwt-parent-auth-guard';
 
 
 @Resolver(() => ParentType)
@@ -22,15 +23,16 @@ export class ParentsResolver {
     return this.parentsService.registerParent(createParentInput);
   }
 
-  // @Query(() => [Parent], { name: 'parents' })
-  // findAll() {
-  //   return this.parentsService.findAll();
-  // }
+  @UseGuards(ParentAuthGuard)
+  @Query(returns => [ParentType], { name: 'parents' })
+  findAll() {
+    return this.parentsService.findAllParents();
+  }
 
-  // @Query(() => Parent, { name: 'parent' })
-  // findOne(@Args('id', { type: () => Int }) id: number) {
-  //   return this.parentsService.findOne(id);
-  // }
+  @Query(returns => ParentType, { name: 'parent' })
+  findOne(@Args('id') id: string) {
+    return this.parentsService.findOne(id);
+  }
 
   // @Mutation(() => Parent)
   // updateParent(@Args('updateParentInput') updateParentInput: UpdateParentInput) {

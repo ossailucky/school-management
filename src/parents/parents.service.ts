@@ -36,12 +36,16 @@ export class ParentsService {
     return await this.parentRepository.findOneBy({email:email});
   }
 
-  findAll() {
-    return `This action returns all parents`;
+  async findAllParents(): Promise<Parent[]> {
+    return await this.parentRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} parent`;
+  async findOne(id: string): Promise<Parent> {
+    try {
+      return await this.parentRepository.findOneBy({id:id});
+    } catch (error) {
+      throw new error;
+    }
   }
 
   update(id: number, updateParentInput: UpdateParentInput) {
