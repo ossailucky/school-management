@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthTeacherInput } from './dto/create-auth-teacher.input';
-import { UpdateAuthTeacherInput } from './dto/update-auth-teacher.input';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { TeachersService } from 'src/teachers/teachers.service';
+import { TeacherAuthDTO, TeacherDTO } from './dto/auth-teacher';
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class AuthTeachersService {
-  create(createAuthTeacherInput: CreateAuthTeacherInput) {
-    return 'This action adds a new authTeacher';
+  constructor(
+    private jwtService: JwtService,
+    private teacherService: TeachersService
+  ) {}
+  async validate(teacherauth: TeacherAuthDTO): Promise<any> {
+    const teacher = await this.teacherService.getTeacherData(teacherauth);
+
+    if(!teacher){
+      throw new NotFoundException();
+    }
+
+    const { password } = teacherauth;
+    const matchedPassord = await bcrypt.compare(password, teacher.password);
+
+    if(matchedPassord) {
+      const accessToken = await this.getToken({
+        id:teacher.id,
+        email: teacher.email
+    });
+
+      return {
+        teacher,
+        ...accessToken
+      };
+
+    }
+
+   
   }
 
-  findAll() {
-    return `This action returns all authTeachers`;
-  }
+  async getToken(teacher:TeacherDTO){
+        return {
+            acces_token :this.jwtService.sign(teacher)
+        }
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} authTeacher`;
-  }
-
-  update(id: number, updateAuthTeacherInput: UpdateAuthTeacherInput) {
-    return `This action updates a #${id} authTeacher`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} authTeacher`;
-  }
+  
 }

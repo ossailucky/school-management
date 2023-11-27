@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { Teacher } from './entities/teacher.entity';
 import { CreateTeacherInput } from './dto/create-teacher.input';
 import { UpdateTeacherInput } from './dto/update-teacher.input';
+import { TeacherAuthDTO } from 'src/auth-teachers/dto/auth-teacher';
 
 @Injectable()
 export class TeachersService {
@@ -27,6 +28,11 @@ export class TeachersService {
 
 
     return await this.teacherRepository.save(teacher);
+  }
+
+  async getTeacherData(teacher: TeacherAuthDTO): Promise<Teacher>{
+    const { email } = teacher;
+    return await this.teacherRepository.findOneBy({email: email});
   }
 
   findAll() {

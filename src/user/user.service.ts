@@ -31,7 +31,7 @@ export class UserService {
   }
 
   async getUserdata(user: AuthDTO): Promise<User>{
-    const { email } = user
+    const { email } = user;
     return await this.userRepository.findOneBy({email:email});
   }
 

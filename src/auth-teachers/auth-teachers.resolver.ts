@@ -1,35 +1,27 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { AuthTeachersService } from './auth-teachers.service';
-import { AuthTeacher } from './entities/auth-teacher.entity';
-import { CreateAuthTeacherInput } from './dto/create-auth-teacher.input';
-import { UpdateAuthTeacherInput } from './dto/update-auth-teacher.input';
 
-@Resolver(() => AuthTeacher)
+import { TeacherAuthType } from './teacher-auth.type';
+
+@Resolver(of => TeacherAuthType)
 export class AuthTeachersResolver {
   constructor(private readonly authTeachersService: AuthTeachersService) {}
 
-  @Mutation(() => AuthTeacher)
-  createAuthTeacher(@Args('createAuthTeacherInput') createAuthTeacherInput: CreateAuthTeacherInput) {
-    return this.authTeachersService.create(createAuthTeacherInput);
-  }
+  @Query(returns => TeacherAuthType)
+  async teacherLogin(
+    @Args({name: "email", type: () => String}) email: string,
+    @Args({name: "password", type: () => String}) password: string
+    ) {
+      const info = await this.authTeachersService.validate({email, password});
 
-  @Query(() => [AuthTeacher], { name: 'authTeachers' })
-  findAll() {
-    return this.authTeachersService.findAll();
+      const{ teacher, acces_token} = info;
+    const returnInfo = {
+      firstName:teacher.firstName,
+      lastName: teacher.lastName,
+      email: teacher.email,
+      access_token: acces_token
+    }    
+    return returnInfo;
   }
-
-  @Query(() => AuthTeacher, { name: 'authTeacher' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.authTeachersService.findOne(id);
-  }
-
-  @Mutation(() => AuthTeacher)
-  updateAuthTeacher(@Args('updateAuthTeacherInput') updateAuthTeacherInput: UpdateAuthTeacherInput) {
-    return this.authTeachersService.update(updateAuthTeacherInput.id, updateAuthTeacherInput);
-  }
-
-  @Mutation(() => AuthTeacher)
-  removeAuthTeacher(@Args('id', { type: () => Int }) id: number) {
-    return this.authTeachersService.remove(id);
-  }
+ 
 }
