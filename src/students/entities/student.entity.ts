@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Column, ObjectIdColumn, DeleteDateColumn } from 'typeorm';
+import { Entity, PrimaryColumn, Column, ObjectIdColumn, DeleteDateColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Student {
@@ -40,6 +40,12 @@ export class Student {
 
   @Column()
   teachers: string[];
+
+  @CreateDateColumn()
+  created_at: Date; // Creation date
+
+  @UpdateDateColumn()
+  updated_at: Date; // Last updated date
 
   @DeleteDateColumn()
   deletedAt: Date;
