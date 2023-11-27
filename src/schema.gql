@@ -108,7 +108,7 @@ type Query {
   students: [student!]!
   student(id: String!): student!
   teachers: [teacher!]!
-  teacher(id: Int!): teacher!
+  teacher(id: String!): teacher!
   parents: [parent!]!
   parent(id: String!): parent!
   studentLogin(email: String!, password: String!): studentAuth!

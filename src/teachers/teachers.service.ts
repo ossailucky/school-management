@@ -39,8 +39,12 @@ export class TeachersService {
     return await this.teacherRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} teacher`;
+  async findOne(id: string): Promise<Teacher> {
+    try {
+      return await this.teacherRepository.findOneBy({id:id});
+    } catch (error) {
+      throw new error;
+    }
   }
 
   update(id: number, updateTeacherInput: UpdateTeacherInput) {

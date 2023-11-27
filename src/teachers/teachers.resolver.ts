@@ -27,9 +27,10 @@ export class TeachersResolver {
     return this.teachersService.getAllTeachers();
   }
 
-  @Query(() => TeacherType, { name: 'teacher' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.teachersService.findOne(id);
+  @UseGuards(TeacherAuthGuard)
+  @Query(returns => TeacherType, { name: 'teacher' })
+  async findOne(@Args('id') id: string) {
+    return  await this.teachersService.findOne(id);
   }
 
   @Mutation(() => TeacherType)
