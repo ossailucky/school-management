@@ -14,8 +14,8 @@ export class TeacherType {
   @Field()
   email: string;
   
-  @Field()
-  role: string;
+//   @Field()
+//   role: string;
 
   @Field()
   DOB:string;

@@ -1,7 +1,33 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
+import { MinLength, IsEmail, IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class CreateTeacherInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field()
+  @IsNotEmpty({message:"first name Field cannot be empty"})
+  @MinLength(2)
+  firstName: string;
+
+  @Field()
+  @IsNotEmpty({message:"last name Field cannot be empty"})
+  @MinLength(2)
+  lastName: string;
+
+  @Field()
+  @IsNotEmpty({message:"Email Field cannot be empty"})
+  @IsEmail()
+  email: string;
+
+  @Field()
+  @IsNotEmpty({message:"password Field is required"})
+  @MinLength(8)
+  password: string;
+
+  @Field()
+  @IsNotEmpty({message:"User role Field cannot be empty"})
+  DOB:string;
+
+  @Field()
+  @IsNotEmpty({message:"Gender Field cannot be empty"})
+  gender: string;
 }

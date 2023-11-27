@@ -1,11 +1,32 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ObjectID, Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { v4 as uuid } from 'uuid';
+import { Teacher } from './entities/teacher.entity';
 import { CreateTeacherInput } from './dto/create-teacher.input';
 import { UpdateTeacherInput } from './dto/update-teacher.input';
 
 @Injectable()
 export class TeachersService {
-  create(createTeacherInput: CreateTeacherInput) {
-    return 'This action adds a new teacher';
+  constructor(@InjectRepository(Teacher) private teacherRepository: Repository<Teacher>) {}
+  async registerTeacher(createTeacherInput: CreateTeacherInput): Promise<Teacher>{
+    const { firstName, lastName, email, password, DOB, gender} = createTeacherInput;
+
+    const hashPassword : string = await bcrypt.hash(password,10);
+
+    const teacher = this.teacherRepository.create({
+      id: uuid(),
+      firstName:firstName,
+      lastName:lastName,
+      email:email,
+      password:hashPassword,
+      DOB: DOB,
+      gender: gender
+    });
+
+
+    return await this.teacherRepository.save(teacher);
   }
 
   findAll() {

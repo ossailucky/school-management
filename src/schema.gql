@@ -51,7 +51,6 @@ type teacher {
   firstName: String!
   lastName: String!
   email: String!
-  role: String!
   DOB: String!
   TeacherClass: String!
   subjects: String!
@@ -195,13 +194,21 @@ input CreateStudentInput {
 }
 
 input CreateTeacherInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  DOB: String!
+  gender: String!
 }
 
 input UpdateTeacherInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  DOB: String
+  gender: String
   id: Int!
 }
 
