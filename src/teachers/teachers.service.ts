@@ -35,8 +35,8 @@ export class TeachersService {
     return await this.teacherRepository.findOneBy({email: email});
   }
 
-  findAll() {
-    return `This action returns all teachers`;
+  async getAllTeachers(): Promise<Teacher[]> {
+    return await this.teacherRepository.find();
   }
 
   findOne(id: number) {
