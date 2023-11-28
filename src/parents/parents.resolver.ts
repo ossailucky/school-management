@@ -23,12 +23,14 @@ export class ParentsResolver {
     return this.parentsService.registerParent(createParentInput);
   }
 
-  @UseGuards(ParentAuthGuard)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Query(returns => [ParentType], { name: 'parents' })
   findAll() {
     return this.parentsService.findAllParents();
   }
 
+  @UseGuards(ParentAuthGuard)
   @Query(returns => ParentType, { name: 'parent' })
   findOne(@Args('id') id: string) {
     return this.parentsService.findOne(id);

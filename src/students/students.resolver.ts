@@ -22,7 +22,8 @@ export class StudentsResolver {
     return this.studentsService.register(createStudentInput);
   }
 
-  @UseGuards(StudentAuthGuard)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Query(returns => [StudentType], { name: 'students' })
   allStudents() {
     return this.studentsService.getAllStudent();

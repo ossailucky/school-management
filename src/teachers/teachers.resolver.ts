@@ -21,7 +21,8 @@ export class TeachersResolver {
     return this.teachersService.registerTeacher(createTeacherInput);
   }
 
-  @UseGuards(TeacherAuthGuard)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Query(returns => [TeacherType], { name: 'teachers' })
   getAllTeachers() {
     return this.teachersService.getAllTeachers();
