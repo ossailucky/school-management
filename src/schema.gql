@@ -62,7 +62,7 @@ type parent {
   lastName: String!
   email: String!
   role: String!
-  children: String!
+  children: [student!]!
 }
 
 type studentAuth {
@@ -133,6 +133,7 @@ type Mutation {
   updateTeacher(updateTeacherInput: UpdateTeacherInput!): teacher!
   removeTeacher(id: Int!): teacher!
   createParent(createParentInput: CreateParentInput!): parent!
+  assignStudentsToParent(assignStudentsToParent: AssignStudentsToParentInput!): parent!
   updateAuthParent(updateAuthParentInput: String!): AuthParent!
   removeAuthParent(id: Int!): AuthParent!
 }
@@ -219,4 +220,10 @@ input CreateParentInput {
   password: String!
   role: String!
   gender: String!
+  children: [ID!]! = []
+}
+
+input AssignStudentsToParentInput {
+  parentId: ID!
+  studentIds: [ID!]!
 }

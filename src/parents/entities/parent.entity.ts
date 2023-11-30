@@ -2,7 +2,7 @@ import { Entity, PrimaryColumn, Column, ObjectIdColumn, DeleteDateColumn, Create
 
 
 @Entity()
-export class Parent{
+export class Parents{
     @ObjectIdColumn()
     _id: string;
     

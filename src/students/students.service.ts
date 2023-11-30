@@ -45,6 +45,18 @@ export class StudentsService {
     return await this.studentRepository.findOneBy({id:id});
   }
 
+  async getManyStudents(studentIds:string[]): Promise<Student[]>{
+    return this.studentRepository.find({
+        where: {
+           // ...studentIds.map(id => ({ id })),
+            id: {
+                // @ts-ignore
+                $in: studentIds
+            }
+        }
+    })
+}
+
   update(id: number, updateStudentInput: UpdateStudentInput) {
     return `This action updates a #${id} student`;
   }

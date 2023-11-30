@@ -2,11 +2,13 @@ import { Module } from '@nestjs/common';
 import { ParentsService } from './parents.service';
 import { ParentsResolver } from './parents.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Parent } from './entities/parent.entity';
+import { Parents } from './entities/parent.entity';
+import { StudentsModule } from 'src/students/students.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Parent])
+    StudentsModule,
+    TypeOrmModule.forFeature([Parents])
   ],
   providers: [ParentsResolver, ParentsService],
   exports: [ ParentsService ]

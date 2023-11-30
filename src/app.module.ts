@@ -20,7 +20,7 @@ import { AuthParentsModule } from './auth-parents/auth-parents.module';
 import { AuthTeachersModule } from './auth-teachers/auth-teachers.module';
 import { Student } from './students/entities/student.entity';
 import { StudentJwtStrategy } from './auth-students/guards/jwt-students-strategy';
-import { Parent } from './parents/entities/parent.entity';
+import { Parents } from './parents/entities/parent.entity';
 import { ParentJwtStrategy } from './auth-parents/guards/jwt-parent-strategy';
 import { Teacher } from './teachers/entities/teacher.entity';
 import { TeacherJwtStrategy } from './auth-teachers/guards/teacher-jwt.strategy';
@@ -37,7 +37,7 @@ import { TeacherJwtStrategy } from './auth-teachers/guards/teacher-jwt.strategy'
         User,
         ClassRoom,
         Student,
-        Parent,
+        Parents,
         Teacher
       ]
     }),

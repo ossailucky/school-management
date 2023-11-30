@@ -5,15 +5,15 @@ import * as bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 import { CreateParentInput } from './dto/create-parent.input';
 import { UpdateParentInput } from './dto/update-parent.input';
-import { Parent } from './entities/parent.entity';
+import { Parents } from './entities/parent.entity';
 import { ParentAuthDTO } from 'src/auth-parents/dto/auth-parent';
 
 @Injectable()
 export class ParentsService {
-  constructor(@InjectRepository(Parent) private parentRepository: Repository<Parent>) {}
+  constructor(@InjectRepository(Parents) private parentRepository: Repository<Parents>) {}
 
-  async registerParent(createParentInput: CreateParentInput): Promise<Parent> {
-    const { firstName, lastName, email, password, role, gender} = createParentInput;
+  async registerParent(createParentInput: CreateParentInput): Promise<Parents> {
+    const { firstName, lastName, email, password, role, gender, children} = createParentInput;
 
     const hashPassword : string = await bcrypt.hash(password,10);
 
@@ -24,28 +24,40 @@ export class ParentsService {
       email:email,
       password:hashPassword,
       role: role,
-      gender: gender
+      gender: gender,
+      children: []
     });
     
 
     return await this.parentRepository.save(parent);
   }
 
-  async getParentData(parent:ParentAuthDTO): Promise<Parent>{
+  async getParentData(parent:ParentAuthDTO): Promise<Parents>{
     const { email } = parent;
     return await this.parentRepository.findOneBy({email:email});
   }
 
-  async findAllParents(): Promise<Parent[]> {
+  async findAllParents(): Promise<Parents[]> {
     return await this.parentRepository.find();
   }
 
-  async findOne(id: string): Promise<Parent> {
+  async findOne(id: string): Promise<Parents> {
     try {
       return await this.parentRepository.findOneBy({id:id});
     } catch (error) {
       throw new error;
     }
+  }
+
+
+  async assignStudentsToParent(parentID: string, studentsID: string[]): Promise<Parents>{
+
+    const parent = await this.parentRepository.findOneBy({id: parentID});
+
+    parent.children = [ ...parent.children, ...studentsID];
+
+    return this.parentRepository.save(parent);
+
   }
 
   update(id: number, updateParentInput: UpdateParentInput) {
