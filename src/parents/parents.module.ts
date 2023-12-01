@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { ParentsService } from './parents.service';
 import { ParentsResolver } from './parents.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,7 +7,7 @@ import { StudentsModule } from 'src/students/students.module';
 
 @Module({
   imports: [
-    StudentsModule,
+    forwardRef(()=> StudentsModule),
     TypeOrmModule.forFeature([Parents])
   ],
   providers: [ParentsResolver, ParentsService],

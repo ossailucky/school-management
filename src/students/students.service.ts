@@ -10,9 +10,10 @@ import { StudentDTO } from 'src/auth-students/dto/auth-student';
 
 @Injectable()
 export class StudentsService {
-  constructor(@InjectRepository(Student) private studentRepository: Repository<Student>) {}
+  constructor(
+    @InjectRepository(Student) private studentRepository: Repository<Student>) {}
   async register(createStudentInput: CreateStudentInput): Promise<Student> {
-    const { firstName, lastName, email, password, role, gender, studentClass} = createStudentInput;
+    const { firstName, lastName, email, password, role, gender, studentClass, parents} = createStudentInput;
 
     const hashPassword : string = await bcrypt.hash(password,10);
     const student = await this.studentRepository.create({
@@ -25,6 +26,7 @@ export class StudentsService {
       //DOB: DOB,
       gender: gender,
       studentClass: studentClass,
+      parents
 
     })
     return await this.studentRepository.save(student);
@@ -45,8 +47,19 @@ export class StudentsService {
     return await this.studentRepository.findOneBy({id:id});
   }
 
+  async assignParentsToStudent(studentID: string, parentsID: string[]): Promise<Student> {
+    try {
+      const student = await this.studentRepository.findOneBy({id: studentID});
+      student.parents = [ ...student.parents, ...parentsID];
+       return this.studentRepository.save(student);
+      
+    } catch (error) {
+      
+    }
+  }
+
   async getManyStudents(studentIds:string[]): Promise<Student[]>{
-    return this.studentRepository.find({
+    return await this.studentRepository.find({
         where: {
            // ...studentIds.map(id => ({ id })),
             id: {

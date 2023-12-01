@@ -1,5 +1,5 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
-import { MinLength, IsEmail, IsNotEmpty, IsOptional, IsDate } from 'class-validator';
+import { InputType, Int, Field, ID } from '@nestjs/graphql';
+import { MinLength, IsEmail, IsNotEmpty, IsOptional, IsDate, IsUUID } from 'class-validator';
 
 @InputType()
 export class CreateStudentInput {
@@ -39,4 +39,8 @@ export class CreateStudentInput {
   @Field()
   @IsNotEmpty({message:"Gender Field cannot be empty"})
   studentClass: string;
+
+  @IsUUID("4", { each: true })
+  @Field(() => [ID], { defaultValue: [] })
+  parents: string[];
 }

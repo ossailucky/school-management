@@ -60,6 +60,21 @@ export class ParentsService {
 
   }
 
+  async getManyParents(parentIds: string[]): Promise<Parents[]> {
+    try {
+      return await this.parentRepository.find({
+        where: {
+          id: {
+            //@ts-ignore
+            $in: parentIds
+          }
+        }
+      });
+    } catch (error) {
+      throw new error;
+    }
+  }
+
   update(id: number, updateParentInput: UpdateParentInput) {
     return `This action updates a #${id} parent`;
   }
