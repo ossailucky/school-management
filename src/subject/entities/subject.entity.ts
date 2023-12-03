@@ -1,7 +1,24 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Entity, PrimaryColumn, Column, ObjectIdColumn, DeleteDateColumn, } from  'typeorm';
 
-@ObjectType()
-export class Subject {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+
+@Entity()
+export class Subject{
+  @ObjectIdColumn()
+  _id: string;
+
+  @PrimaryColumn()
+  id: string;
+
+  @Column()
+  name: string;
+
+  @Column()
+  className: string[];
+
+  @Column()
+  teachers: string[];
+
+  @Column()
+  students: string[];
 }
+

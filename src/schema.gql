@@ -29,9 +29,22 @@ type classroom {
   students: [user!]!
 }
 
-type Subject {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type teacher {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  DOB: String!
+  TeacherClass: String!
+  subjects: String!
+}
+
+type subject {
+  id: ID!
+  name: String!
+  className: [classroom!]!
+  teachers: [teacher!]!
+  students: [user!]!
 }
 
 type parent {
@@ -53,16 +66,6 @@ type student {
   subjects: String!
   parents: [parent!]!
   teachers: String!
-}
-
-type teacher {
-  id: ID!
-  firstName: String!
-  lastName: String!
-  email: String!
-  DOB: String!
-  TeacherClass: String!
-  subjects: String!
 }
 
 type studentAuth {
@@ -104,7 +107,7 @@ type Query {
   login(email: String!, password: String!): auth!
   AllClassRoom: [classroom!]!
   ClassRoom(id: String!): classroom!
-  subject(id: Int!): Subject!
+  subject(id: Int!): subject!
   students: [student!]!
   student(id: String!): student!
   parents: [parent!]!
@@ -125,9 +128,7 @@ type Mutation {
   createClassRoom(createClassRoomInput: CreateClassRoomInput!): classroom!
   updateClassRoom(updateClassRoomInput: UpdateClassRoomInput!): classroom!
   removeClassRoom(id: Int!): classroom!
-  createSubject(createSubjectInput: CreateSubjectInput!): Subject!
-  updateSubject(updateSubjectInput: UpdateSubjectInput!): Subject!
-  removeSubject(id: Int!): Subject!
+  createSubject(createSubjectInput: CreateSubjectInput!): subject!
   createStudent(createStudentInput: CreateStudentInput!): student!
   assignParentsToStudent(assigParentsToStudent: AssignParentsToStudentInput!): student!
   createParent(createParentInput: CreateParentInput!): parent!
@@ -162,7 +163,7 @@ input UpdateUserInput {
 
 input CreateClassRoomInput {
   className: String!
-  classSubjects: [String!]! = []
+  classSubjects: [ID!]! = []
   students: [ID!]! = []
 }
 
@@ -175,14 +176,10 @@ input UpdateClassRoomInput {
 }
 
 input CreateSubjectInput {
-  subjectName: String!
+  name: String!
+  teachers: [ID!]! = []
+  className: [ID!]! = []
   students: [ID!]! = []
-}
-
-input UpdateSubjectInput {
-  subjectName: String
-  students: [ID!] = []
-  id: Int!
 }
 
 input CreateStudentInput {
