@@ -47,6 +47,22 @@ export class TeachersService {
     }
   }
 
+  async getManyTeachers(teacherIds:string[]): Promise<Teacher[]>{
+    try {
+      return await this.teacherRepository.find({
+        where: {
+          // ...studentIds.map(id => ({ id })),
+           id: {
+               // @ts-ignore
+               $in: teacherIds
+           }
+       }
+      });
+    } catch (error) {
+      throw new error;
+    }
+  }
+
   update(id: number, updateTeacherInput: UpdateTeacherInput) {
     return `This action updates a #${id} teacher`;
   }

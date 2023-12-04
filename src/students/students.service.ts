@@ -54,7 +54,7 @@ export class StudentsService {
        return this.studentRepository.save(student);
       
     } catch (error) {
-      
+      throw new error;
     }
   }
 

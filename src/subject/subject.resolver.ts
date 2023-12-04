@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ID } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ID, ResolveField, Parent } from '@nestjs/graphql';
 import { SubjectService } from './subject.service';
 import { Subject } from './entities/subject.entity';
 import { CreateSubjectInput } from './dto/create-subject.input';
@@ -9,10 +9,15 @@ import { GqlAuthGuard } from 'src/auth/guards/jwt-auth-guard';
 import { RolesGuard } from 'src/auth/guards/roles.guards';
 import { hasRoles } from 'src/auth/decorators/roles.decorators';
 import { Role } from 'src/user/entities/user.entity';
+import { AssignTeacherToSubjectInput } from './dto/assign-teacher-subject';
+import { TeachersService } from 'src/teachers/teachers.service';
 
 @Resolver(() => SubjectType)
 export class SubjectResolver {
-  constructor(private readonly subjectService: SubjectService) {}
+  constructor(
+    private readonly subjectService: SubjectService,
+    private readonly teacherService: TeachersService
+    ) {}
 
   @hasRoles(Role.ADMIN, Role.SECRETARY)
   @UseGuards(GqlAuthGuard, RolesGuard)
@@ -33,6 +38,15 @@ export class SubjectResolver {
     return this.subjectService.getOneSubject(id);
   }
 
+  @Mutation(returns => SubjectType)
+  async assignTeacherToSubject(
+    @Args("assignTeacherToSubject") assignTeacherToSubject: AssignTeacherToSubjectInput
+  ){
+    const {subjectId, teacherIds } = assignTeacherToSubject;
+
+    return await this.subjectService.assignTeacherToSubject(subjectId, teacherIds);
+  }
+
   // @Mutation(() => Subject)
   // updateSubject(@Args('updateSubjectInput') updateSubjectInput: UpdateSubjectInput) {
   //   return this.subjectService.update(updateSubjectInput.id, updateSubjectInput);
@@ -42,4 +56,9 @@ export class SubjectResolver {
   // removeSubject(@Args('id', { type: () => Int }) id: number) {
   //   return this.subjectService.remove(id);
   // }
+
+  @ResolveField()
+  async teachers(@Parent() subject: Subject){
+    return await this.teacherService.getManyTeachers(subject.teachers);
+  }
 }
