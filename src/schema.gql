@@ -108,7 +108,7 @@ type Query {
   AllClassRoom: [classroom!]!
   ClassRoom(id: String!): classroom!
   subjects: [subject!]!
-  subject(id: Int!): subject!
+  subject(id: ID!): subject!
   students: [student!]!
   student(id: String!): student!
   parents: [parent!]!

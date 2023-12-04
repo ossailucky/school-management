@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ID } from '@nestjs/graphql';
 import { SubjectService } from './subject.service';
 import { Subject } from './entities/subject.entity';
 import { CreateSubjectInput } from './dto/create-subject.input';
@@ -20,8 +20,8 @@ export class SubjectResolver {
   }
 
   @Query(returns => SubjectType, { name: 'subject' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.subjectService.findOne(id);
+  findOne(@Args('id', { type: () => ID }) id: string) {
+    return this.subjectService.getOneSubject(id);
   }
 
   // @Mutation(() => Subject)

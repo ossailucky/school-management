@@ -40,8 +40,12 @@ export class SubjectService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} subject`;
+  async  getOneSubject(id: string): Promise<Subject> {
+    try {
+      return await this.subjectRepository.findOneBy({id:id});
+    } catch (error) {
+      throw new error;
+    }
   }
 
   update(id: number, updateSubjectInput: UpdateSubjectInput) {
