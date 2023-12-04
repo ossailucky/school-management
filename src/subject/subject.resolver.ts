@@ -38,6 +38,8 @@ export class SubjectResolver {
     return this.subjectService.getOneSubject(id);
   }
 
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Mutation(returns => SubjectType)
   async assignTeacherToSubject(
     @Args("assignTeacherToSubject") assignTeacherToSubject: AssignTeacherToSubjectInput
