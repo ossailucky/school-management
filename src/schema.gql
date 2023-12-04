@@ -107,6 +107,7 @@ type Query {
   login(email: String!, password: String!): auth!
   AllClassRoom: [classroom!]!
   ClassRoom(id: String!): classroom!
+  subjects: [subject!]!
   subject(id: Int!): subject!
   students: [student!]!
   student(id: String!): student!

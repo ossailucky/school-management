@@ -32,8 +32,12 @@ export class SubjectService {
     }
   }
 
-  findAll() {
-    return `This action returns all subject`;
+  async getAllSubjects(): Promise<Subject[]> {
+    try {
+      return await this.subjectRepository.find();
+    } catch (error) {
+      throw new error;
+    }
   }
 
   findOne(id: number) {

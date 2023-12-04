@@ -14,9 +14,9 @@ export class SubjectResolver {
     return this.subjectService.createSubject(createSubjectInput);
   }
 
-  @Query(returns => [SubjectType], { name: 'subject' })
+  @Query(returns => [SubjectType], { name: 'subjects' })
   findAll() {
-    return this.subjectService.findAll();
+    return this.subjectService.getAllSubjects();
   }
 
   @Query(returns => SubjectType, { name: 'subject' })
