@@ -12,12 +12,15 @@ import { Role } from 'src/user/entities/user.entity';
 import { AssignTeacherToSubjectInput } from './dto/assign-teacher-subject';
 import { TeachersService } from 'src/teachers/teachers.service';
 import { AssignSudentsToSubjectInput } from './dto/assign-subjects-students';
+import { StudentsService } from 'src/students/students.service';
 
 @Resolver(() => SubjectType)
 export class SubjectResolver {
   constructor(
     private readonly subjectService: SubjectService,
-    private readonly teacherService: TeachersService
+    private readonly teacherService: TeachersService,
+    private readonly studentService: StudentsService,
+
     ) {}
 
   @hasRoles(Role.ADMIN, Role.SECRETARY)
@@ -73,5 +76,10 @@ export class SubjectResolver {
   @ResolveField()
   async teachers(@Parent() subject: Subject){
     return await this.teacherService.getManyTeachers(subject.teachers);
+  }
+
+  @ResolveField()
+  async students(@Parent() subject: Subject){
+    return await this.studentService.getManyStudents(subject.students);
   }
 }
