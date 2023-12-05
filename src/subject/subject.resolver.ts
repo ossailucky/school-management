@@ -11,6 +11,7 @@ import { hasRoles } from 'src/auth/decorators/roles.decorators';
 import { Role } from 'src/user/entities/user.entity';
 import { AssignTeacherToSubjectInput } from './dto/assign-teacher-subject';
 import { TeachersService } from 'src/teachers/teachers.service';
+import { AssignSudentsToSubjectInput } from './dto/assign-subjects-students';
 
 @Resolver(() => SubjectType)
 export class SubjectResolver {
@@ -48,6 +49,16 @@ export class SubjectResolver {
 
     return await this.subjectService.assignTeacherToSubject(subjectId, teacherIds);
   }
+
+  @Mutation(returns => SubjectType)
+  async assignSubjectToStudents(
+    @Args("assignStudentToSubject") assignStudentsToSubject: AssignSudentsToSubjectInput
+  ){
+    const {subjectId, studentIds } = assignStudentsToSubject;
+
+    return await this.subjectService.assignStudentsToSubject(subjectId,studentIds);
+  }
+
 
   // @Mutation(() => Subject)
   // updateSubject(@Args('updateSubjectInput') updateSubjectInput: UpdateSubjectInput) {

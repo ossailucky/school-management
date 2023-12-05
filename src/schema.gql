@@ -131,6 +131,7 @@ type Mutation {
   removeClassRoom(id: Int!): classroom!
   createSubject(createSubjectInput: CreateSubjectInput!): subject!
   assignTeacherToSubject(assignTeacherToSubject: AssignTeacherToSubjectInput!): subject!
+  assignSubjectToStudents(assignStudentToSubject: AssignSudentsToSubjectInput!): subject!
   createTeacher(createTeacherInput: CreateTeacherInput!): teacher!
   updateTeacher(updateTeacherInput: UpdateTeacherInput!): teacher!
   removeTeacher(id: Int!): teacher!
@@ -187,6 +188,11 @@ input CreateSubjectInput {
 input AssignTeacherToSubjectInput {
   subjectId: ID!
   teacherIds: [ID!]!
+}
+
+input AssignSudentsToSubjectInput {
+  subjectId: ID!
+  studentIds: [ID!]!
 }
 
 input CreateTeacherInput {

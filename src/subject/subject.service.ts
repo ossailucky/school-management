@@ -47,13 +47,26 @@ export class SubjectService {
       throw new error;
     }
   }
-
+  
   async assignTeacherToSubject(subjectID: string, teachersID: string[]): Promise<Subject>{
     try {
       const subject = await this.subjectRepository.findOneBy({id: subjectID});
 
       subject.teachers = [ ...subject.teachers, ...teachersID];
 
+      return await this.subjectRepository.save(subject);
+    } catch (error) {
+      throw new error;
+    }
+  }
+
+  async assignStudentsToSubject(subjectID: string, studentsID: string[]): Promise<Subject>{
+    try {
+      
+      const subject = await this.subjectRepository.findOneBy({id: subjectID});
+
+      subject.students = [...subject.students, ...studentsID];
+      
       return await this.subjectRepository.save(subject);
     } catch (error) {
       throw new error;
