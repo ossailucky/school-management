@@ -34,6 +34,8 @@ export class TeachersResolver {
     return this.teachersService.getAllTeachers();
   }
    
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Mutation(returns => TeacherType)
   async assignSubjectsToTeacher(
     @Args("assignSubjectsToTeacher") assignSubjectsToTeacher: AssignSubjectToTeacherInput
