@@ -133,6 +133,7 @@ type Mutation {
   assignTeacherToSubject(assignTeacherToSubject: AssignTeacherToSubjectInput!): subject!
   assignSubjectToStudents(assignStudentToSubject: AssignSudentsToSubjectInput!): subject!
   createTeacher(createTeacherInput: CreateTeacherInput!): teacher!
+  assignSubjectsToTeacher(assignSubjectsToTeacher: AssignSubjectToTeacherInput!): teacher!
   updateTeacher(updateTeacherInput: UpdateTeacherInput!): teacher!
   removeTeacher(id: Int!): teacher!
   createStudent(createStudentInput: CreateStudentInput!): student!
@@ -202,6 +203,12 @@ input CreateTeacherInput {
   password: String!
   DOB: String!
   gender: String!
+  subjects: [ID!]! = []
+}
+
+input AssignSubjectToTeacherInput {
+  teacherId: ID!
+  subjectIds: [ID!]!
 }
 
 input UpdateTeacherInput {
@@ -211,6 +218,7 @@ input UpdateTeacherInput {
   password: String
   DOB: String
   gender: String
+  subjects: [ID!] = []
   id: Int!
 }
 

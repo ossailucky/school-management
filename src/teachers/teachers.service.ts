@@ -12,7 +12,7 @@ import { TeacherAuthDTO } from 'src/auth-teachers/dto/auth-teacher';
 export class TeachersService {
   constructor(@InjectRepository(Teacher) private teacherRepository: Repository<Teacher>) {}
   async registerTeacher(createTeacherInput: CreateTeacherInput): Promise<Teacher>{
-    const { firstName, lastName, email, password, DOB, gender} = createTeacherInput;
+    const { firstName, lastName, email, password, DOB, gender, subjects} = createTeacherInput;
 
     const hashPassword : string = await bcrypt.hash(password,10);
 
@@ -23,7 +23,8 @@ export class TeachersService {
       email:email,
       password:hashPassword,
       DOB: DOB,
-      gender: gender
+      gender: gender,
+      subjects
     });
 
 
@@ -58,6 +59,20 @@ export class TeachersService {
            }
        }
       });
+    } catch (error) {
+      throw new error;
+    }
+  }
+
+  async assignSubjectsToTeacher(teacherID: string, subjectsID: string[]): Promise<Teacher>{
+
+    try {
+      const teacher = await this.teacherRepository.findOneBy({id: teacherID});
+
+      teacher.subjects = [ ...teacher.subjects, ...subjectsID];
+
+      return await this.teacherRepository.save(teacher);
+      
     } catch (error) {
       throw new error;
     }

@@ -73,6 +73,22 @@ export class SubjectService {
     }
   }
 
+  async getManySubjects(subjectIds: string[]): Promise<Subject[]> {
+
+    try {
+      return await this.subjectRepository.find({
+        where: {
+          id: {
+            //@ts-ignore
+            $in: subjectIds
+          }
+        }
+      })
+    } catch (error) {
+      throw new error;
+    }
+  }
+
   update(id: number, updateSubjectInput: UpdateSubjectInput) {
     return `This action updates a #${id} subject`;
   }

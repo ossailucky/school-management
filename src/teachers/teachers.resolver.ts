@@ -9,10 +9,15 @@ import { RolesGuard } from 'src/auth/guards/roles.guards';
 import { hasRoles } from 'src/auth/decorators/roles.decorators';
 import { Role } from 'src/user/entities/user.entity';
 import { TeacherAuthGuard } from 'src/auth-teachers/guards/teacher-auth-guard';
+import { SubjectService } from 'src/subject/subject.service';
+import { AssignSubjectToTeacherInput } from './dto/assign-subjects-teacher';
 
 @Resolver(() => TeacherType)
 export class TeachersResolver {
-  constructor(private readonly teachersService: TeachersService) {}
+  constructor(
+    private readonly teachersService: TeachersService,
+    private readonly subjectService: SubjectService
+    ) {}
 
   @UseGuards(GqlAuthGuard, RolesGuard)
   @hasRoles(Role.ADMIN, Role.SECRETARY)
@@ -26,6 +31,15 @@ export class TeachersResolver {
   @Query(returns => [TeacherType], { name: 'teachers' })
   getAllTeachers() {
     return this.teachersService.getAllTeachers();
+  }
+   
+  @Mutation(returns => TeacherType)
+  async assignSubjectsToTeacher(
+    @Args("assignSubjectsToTeacher") assignSubjectsToTeacher: AssignSubjectToTeacherInput
+  ){
+    const { teacherId, subjectIds } = assignSubjectsToTeacher;
+
+    return await this.teachersService.assignSubjectsToTeacher(teacherId, subjectIds);
   }
 
   @UseGuards(TeacherAuthGuard)
