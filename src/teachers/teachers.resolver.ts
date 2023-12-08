@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
 import { TeachersService } from './teachers.service';
 import { CreateTeacherInput } from './dto/create-teacher.input';
 import { UpdateTeacherInput } from './dto/update-teacher.input';
@@ -11,6 +11,7 @@ import { Role } from 'src/user/entities/user.entity';
 import { TeacherAuthGuard } from 'src/auth-teachers/guards/teacher-auth-guard';
 import { SubjectService } from 'src/subject/subject.service';
 import { AssignSubjectToTeacherInput } from './dto/assign-subjects-teacher';
+import { Teacher } from './entities/teacher.entity';
 
 @Resolver(() => TeacherType)
 export class TeachersResolver {
@@ -56,5 +57,10 @@ export class TeachersResolver {
   @Mutation(() => TeacherType)
   removeTeacher(@Args('id', { type: () => Int }) id: number) {
     return this.teachersService.remove(id);
+  }
+
+  @ResolveField()
+  async subjects(@Parent() teacher: Teacher){
+    return this.subjectService.getManySubjects(teacher.subjects);
   }
 }

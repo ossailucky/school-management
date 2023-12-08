@@ -36,7 +36,7 @@ type teacher {
   email: String!
   DOB: String!
   TeacherClass: String!
-  subjects: String!
+  subjects: [subject!]!
 }
 
 type subject {
