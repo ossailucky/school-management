@@ -37,7 +37,7 @@ export class StudentsResolver {
     return this.studentsService.getAllStudent();
   }
 
-  //@UseGuards(StudentAuthGuard)
+  @UseGuards(StudentAuthGuard)
   @Query(returns => StudentType, { name: 'student' })
   findOne(@Args('id') id: string) {
     return this.studentsService.findOne(id);
@@ -54,6 +54,8 @@ export class StudentsResolver {
     return await this.studentsService.assignParentsToStudent(studentId, parentIds)
   }
 
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Mutation(returns => StudentType)
   async assignSubjectsToStudent(
     @Args("assignSubjectsToStudent") assignSubjectsToStudentInput: AssignSubjectsToStudentInput
