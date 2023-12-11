@@ -13,7 +13,7 @@ export class StudentsService {
   constructor(
     @InjectRepository(Student) private studentRepository: Repository<Student>) {}
   async register(createStudentInput: CreateStudentInput): Promise<Student> {
-    const { firstName, lastName, email, password, role, gender, studentClass, parents} = createStudentInput;
+    const { firstName, lastName, email, password, role, gender, studentClass, parents, subjects} = createStudentInput;
 
     const hashPassword : string = await bcrypt.hash(password,10);
     const student = await this.studentRepository.create({
@@ -26,6 +26,7 @@ export class StudentsService {
       //DOB: DOB,
       gender: gender,
       studentClass: studentClass,
+      subjects,
       parents
 
     })
@@ -51,6 +52,17 @@ export class StudentsService {
     try {
       const student = await this.studentRepository.findOneBy({id: studentID});
       student.parents = [ ...student.parents, ...parentsID];
+       return this.studentRepository.save(student);
+      
+    } catch (error) {
+      throw new error;
+    }
+  }
+
+  async assignSubjectsToStudent(studentID: string, subjectsID: string[]): Promise<Student> {
+    try {
+      const student = await this.studentRepository.findOneBy({id: studentID});
+      student.subjects = [ ...student.subjects, ...subjectsID];
        return this.studentRepository.save(student);
       
     } catch (error) {

@@ -43,4 +43,8 @@ export class CreateStudentInput {
   @IsUUID("4", { each: true })
   @Field(() => [ID], { defaultValue: [] })
   parents: string[];
+
+  @IsUUID("4", { each: true })
+  @Field(() => [ID], { defaultValue: [] })
+  subjects: string[];
 }

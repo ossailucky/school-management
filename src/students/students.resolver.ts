@@ -12,12 +12,15 @@ import { Role } from 'src/user/entities/user.entity';
 import { StudentAuthGuard } from 'src/auth-students/guards/jwt-students-auth-guard';
 import { ParentsService } from 'src/parents/parents.service';
 import { AssignParentsToStudentInput } from './dto/assign-parents-student.input';
+import { AssignSubjectsToStudentInput } from './dto/assign-subject-student';
+import { SubjectService } from 'src/subject/subject.service';
 
 @Resolver(() => StudentType)
 export class StudentsResolver {
   constructor(
     private readonly studentsService: StudentsService,
-    private readonly parentService: ParentsService
+    private readonly parentService: ParentsService,
+    private readonly subjectService: SubjectService
     ) {}
 
   @UseGuards(GqlAuthGuard, RolesGuard)
@@ -34,7 +37,7 @@ export class StudentsResolver {
     return this.studentsService.getAllStudent();
   }
 
-  @UseGuards(StudentAuthGuard)
+  //@UseGuards(StudentAuthGuard)
   @Query(returns => StudentType, { name: 'student' })
   findOne(@Args('id') id: string) {
     return this.studentsService.findOne(id);
@@ -51,6 +54,15 @@ export class StudentsResolver {
     return await this.studentsService.assignParentsToStudent(studentId, parentIds)
   }
 
+  @Mutation(returns => StudentType)
+  async assignSubjectsToStudent(
+    @Args("assignSubjectsToStudent") assignSubjectsToStudentInput: AssignSubjectsToStudentInput
+  ){
+    const { studentId, subjectIds } = assignSubjectsToStudentInput;
+
+    return await this.studentsService.assignSubjectsToStudent(studentId, subjectIds);
+  }
+
   // @Mutation(() => Student)
   // updateStudent(@Args('updateStudentInput') updateStudentInput: UpdateStudentInput) {
   //   return this.studentsService.update(updateStudentInput.id, updateStudentInput);
@@ -64,5 +76,10 @@ export class StudentsResolver {
   @ResolveField()
   async parents(@Parent() student: Student){
     return this.parentService.getManyParents(student.parents);
+  }
+
+  @ResolveField()
+  async subjects(@Parent() student: Student){
+    return this.subjectService.getManySubjects(student.subjects);
   }
 }
