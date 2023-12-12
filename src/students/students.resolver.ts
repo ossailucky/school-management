@@ -14,6 +14,7 @@ import { ParentsService } from 'src/parents/parents.service';
 import { AssignParentsToStudentInput } from './dto/assign-parents-student.input';
 import { AssignSubjectsToStudentInput } from './dto/assign-subject-student';
 import { SubjectService } from 'src/subject/subject.service';
+import { StudentOrGqlGuard } from 'src/auth/guards/general-guard';
 
 @Resolver(() => StudentType)
 export class StudentsResolver {
