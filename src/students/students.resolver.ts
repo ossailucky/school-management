@@ -71,6 +71,8 @@ export class StudentsResolver {
   //   return this.studentsService.update(updateStudentInput.id, updateStudentInput);
   // }
 
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Mutation(returns => String)
   removeStudent(@Args('id', { type: () => ID }) id: string) {
     return this.studentsService.removeStudent(id);
