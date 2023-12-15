@@ -86,7 +86,16 @@ export class StudentsService {
     return `This action updates a #${id} student`;
   }
 
-  remove(id: number) {
+  async removeStudent(id: string): Promise<String> {
+    try {
+      const query = await this.studentRepository.delete({id:id});
+      if(query.affected > 0) {
+        return ` Student with the ID ${id} was deleted successfully`
+      }
+      
+    } catch (error) {
+      throw new error;
+    }
     return `This action removes a #${id} student`;
   }
 }
