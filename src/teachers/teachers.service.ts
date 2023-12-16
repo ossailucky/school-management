@@ -82,7 +82,14 @@ export class TeachersService {
     return `This action updates a #${id} teacher`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} teacher`;
+ async removeTeacher(id: string): Promise<String> {
+    try {
+      const query = await this.teacherRepository.delete({id:id});
+      if(query.affected > 0){
+        return `Teacher with  the ID ${id} was deleted successfully`;
+      }
+    } catch (error) {
+      throw new error;
+    }
   }
 }

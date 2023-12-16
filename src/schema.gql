@@ -136,7 +136,7 @@ type Mutation {
   createTeacher(createTeacherInput: CreateTeacherInput!): teacher!
   assignSubjectsToTeacher(assignSubjectsToTeacher: AssignSubjectToTeacherInput!): teacher!
   updateTeacher(updateTeacherInput: UpdateTeacherInput!): teacher!
-  removeTeacher(id: Int!): teacher!
+  removeTeacher(id: ID!): String!
   createStudent(createStudentInput: CreateStudentInput!): student!
   assignParentsToStudent(assigParentsToStudent: AssignParentsToStudentInput!): student!
   assignSubjectsToStudent(assignSubjectsToStudent: AssignSubjectsToStudentInput!): student!

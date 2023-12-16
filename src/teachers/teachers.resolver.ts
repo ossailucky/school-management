@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, ID } from '@nestjs/graphql';
 import { TeachersService } from './teachers.service';
 import { CreateTeacherInput } from './dto/create-teacher.input';
 import { UpdateTeacherInput } from './dto/update-teacher.input';
@@ -56,9 +56,9 @@ export class TeachersResolver {
     return this.teachersService.update(updateTeacherInput.id, updateTeacherInput);
   }
 
-  @Mutation(() => TeacherType)
-  removeTeacher(@Args('id', { type: () => Int }) id: number) {
-    return this.teachersService.remove(id);
+  @Mutation(returns => String)
+  removeTeacher(@Args('id', { type: () => ID }) id: string) {
+    return this.teachersService.removeTeacher(id);
   }
 
   @ResolveField()
