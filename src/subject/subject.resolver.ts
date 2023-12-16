@@ -68,6 +68,8 @@ export class SubjectResolver {
   //   return this.subjectService.update(updateSubjectInput.id, updateSubjectInput);
   // }
 
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Mutation(returns => String)
   removeSubject(@Args('id', { type: () => ID }) id: string) {
     return this.subjectService.removeSubject(id);
