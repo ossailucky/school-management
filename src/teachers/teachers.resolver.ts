@@ -56,6 +56,8 @@ export class TeachersResolver {
     return this.teachersService.update(updateTeacherInput.id, updateTeacherInput);
   }
 
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Mutation(returns => String)
   removeTeacher(@Args('id', { type: () => ID }) id: string) {
     return this.teachersService.removeTeacher(id);
