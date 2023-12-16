@@ -68,10 +68,10 @@ export class SubjectResolver {
   //   return this.subjectService.update(updateSubjectInput.id, updateSubjectInput);
   // }
 
-  // @Mutation(() => Subject)
-  // removeSubject(@Args('id', { type: () => Int }) id: number) {
-  //   return this.subjectService.remove(id);
-  // }
+  @Mutation(returns => String)
+  removeSubject(@Args('id', { type: () => ID }) id: string) {
+    return this.subjectService.removeSubject(id);
+  }
 
   @ResolveField()
   async teachers(@Parent() subject: Subject){

@@ -93,7 +93,14 @@ export class SubjectService {
     return `This action updates a #${id} subject`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} subject`;
+ async removeSubject(id: string): Promise<String> {
+    try {
+      const query = await this.subjectRepository.delete({id:id});
+      if(query.affected > 0){
+        return  `Subject with the ID ${id} was deleted successfully `;
+      }
+    } catch (error) {
+      throw new error;
+    }
   }
 }

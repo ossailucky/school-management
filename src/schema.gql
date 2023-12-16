@@ -132,6 +132,7 @@ type Mutation {
   createSubject(createSubjectInput: CreateSubjectInput!): subject!
   assignTeacherToSubject(assignTeacherToSubject: AssignTeacherToSubjectInput!): subject!
   assignSubjectToStudents(assignStudentToSubject: AssignSudentsToSubjectInput!): subject!
+  removeSubject(id: ID!): String!
   createTeacher(createTeacherInput: CreateTeacherInput!): teacher!
   assignSubjectsToTeacher(assignSubjectsToTeacher: AssignSubjectToTeacherInput!): teacher!
   updateTeacher(updateTeacherInput: UpdateTeacherInput!): teacher!

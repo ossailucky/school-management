@@ -90,12 +90,11 @@ export class StudentsService {
     try {
       const query = await this.studentRepository.delete({id:id});
       if(query.affected > 0) {
-        return ` Student with the ID ${id} was deleted successfully`
+        return ` Student with the ID ${id} was deleted successfully`;
       }
       
     } catch (error) {
       throw new error;
     }
-    return `This action removes a #${id} student`;
   }
 }
