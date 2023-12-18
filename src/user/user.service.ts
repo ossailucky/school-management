@@ -51,10 +51,13 @@ export class UserService {
   }
 
   async remove(id: string): Promise<String> {
-    const user = await this.userRepository.findOneBy({id:id});
-    if(user){
-      const softDelete = await this.userRepository.softRemove(user);
-      return softDelete? "user Info was Partially remove": "Problem removing user info";
+    try {
+      const user = await this.userRepository.delete({id:id});
+      if(user){
+        return user? "user is deleted": "Problem removing user";
+      }
+    } catch (error) {
+      throw new error;
     }
   }
 
