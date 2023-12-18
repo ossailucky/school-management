@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, ID } from '@nestjs/graphql';
 import { ParentsService } from './parents.service';
 import { Parents } from './entities/parent.entity';
 import { CreateParentInput } from './dto/create-parent.input';
@@ -56,10 +56,10 @@ export class ParentsResolver {
   //   return this.parentsService.update(updateParentInput.id, updateParentInput);
   // }
 
-  // @Mutation(() => Parent)
-  // removeParent(@Args('id', { type: () => Int }) id: number) {
-  //   return this.parentsService.remove(id);
-  // }
+  @Mutation(returns => String)
+  removeParent(@Args('id', { type: () => ID }) id: string) {
+    return this.parentsService.removeParent(id);
+  }
 
   @ResolveField()
     async children(@Parent() parent: Parents){

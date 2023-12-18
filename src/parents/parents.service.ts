@@ -79,7 +79,14 @@ export class ParentsService {
     return `This action updates a #${id} parent`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} parent`;
+  async removeParent(id: string): Promise<String> {
+    try {
+      const query = await this.parentRepository.delete({id:id});
+      if(query.affected > 0){
+        return `Parent with  the ID ${id} was deleted successfully`;
+      }
+    } catch (error) {
+      throw new error;
+    }
   }
 }
