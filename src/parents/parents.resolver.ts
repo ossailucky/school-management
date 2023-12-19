@@ -56,7 +56,8 @@ export class ParentsResolver {
   //   return this.parentsService.update(updateParentInput.id, updateParentInput);
   // }
 
-  
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Mutation(returns => String)
   removeParent(@Args('id', { type: () => ID }) id: string) {
     return this.parentsService.removeParent(id);
