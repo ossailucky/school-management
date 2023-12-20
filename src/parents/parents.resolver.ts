@@ -42,7 +42,9 @@ export class ParentsResolver {
     return this.parentsService.findOne(id);
   }
 
-  @Mutation(returns => ParentType)
+  
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   async assignStudentsToParent(
     @Args("assignStudentsToParent") assignStudentsToParentInput: AssignStudentsToParentInput
   ){
