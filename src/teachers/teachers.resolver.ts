@@ -51,6 +51,7 @@ export class TeachersResolver {
     return  await this.teachersService.findOne(id);
   }
 
+  @UseGuards(TeacherAuthGuard)
   @Mutation(returns => TeacherType)
   updateTeacher(
     @Args('id', { type: () => ID }) id: string,
