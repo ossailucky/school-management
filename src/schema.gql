@@ -140,9 +140,9 @@ type Mutation {
   createStudent(createStudentInput: CreateStudentInput!): student!
   assignParentsToStudent(assigParentsToStudent: AssignParentsToStudentInput!): student!
   assignSubjectsToStudent(assignSubjectsToStudent: AssignSubjectsToStudentInput!): student!
+  updateStudent(id: ID!, updateStudentInput: UpdateStudentInput!): student!
   removeStudent(id: ID!): String!
   createParent(createParentInput: CreateParentInput!): parent!
-  assignStudentsToParent(assignStudentsToParent: AssignStudentsToParentInput!): parent!
   removeParent(id: ID!): String!
   updateAuthParent(updateAuthParentInput: String!): AuthParent!
   removeAuthParent(id: Int!): AuthParent!
@@ -248,6 +248,19 @@ input AssignSubjectsToStudentInput {
   subjectIds: [ID!]!
 }
 
+input UpdateStudentInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  role: String
+  gender: String
+  studentClass: String
+  parents: [ID!] = []
+  subjects: [ID!] = []
+  DOB: String!
+}
+
 input CreateParentInput {
   firstName: String!
   lastName: String!
@@ -256,9 +269,4 @@ input CreateParentInput {
   role: String!
   gender: String!
   children: [ID!]! = []
-}
-
-input AssignStudentsToParentInput {
-  parentId: ID!
-  studentIds: [ID!]!
 }

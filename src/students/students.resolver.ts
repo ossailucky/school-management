@@ -66,10 +66,13 @@ export class StudentsResolver {
     return await this.studentsService.assignSubjectsToStudent(studentId, subjectIds);
   }
 
-  // @Mutation(() => Student)
-  // updateStudent(@Args('updateStudentInput') updateStudentInput: UpdateStudentInput) {
-  //   return this.studentsService.update(updateStudentInput.id, updateStudentInput);
-  // }
+  @Mutation(returns => StudentType)
+  updateStudent(
+    @Args('id', { type: () => ID }) id: string,
+    @Args('updateStudentInput') updateStudentInput: UpdateStudentInput
+    ) {
+    return this.studentsService.updateStudent(id, updateStudentInput);
+  }
 
   @UseGuards(GqlAuthGuard, RolesGuard)
   @hasRoles(Role.ADMIN, Role.SECRETARY)

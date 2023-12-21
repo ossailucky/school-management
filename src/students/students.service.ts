@@ -82,8 +82,17 @@ export class StudentsService {
     })
 }
 
-  update(id: number, updateStudentInput: UpdateStudentInput) {
-    return `This action updates a #${id} student`;
+  async updateStudent(id: string, updateStudent: UpdateStudentInput): Promise<Student>{
+    try {
+      const student = await this.studentRepository.findOneBy({id: id});
+      if(student){
+        Object.assign(student, updateStudent);
+
+        return await this.studentRepository.save(student);
+      }
+    } catch (error) {
+      throw new error;
+    }
   }
 
   async removeStudent(id: string): Promise<String> {
