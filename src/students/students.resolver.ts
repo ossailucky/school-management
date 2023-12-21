@@ -66,6 +66,8 @@ export class StudentsResolver {
     return await this.studentsService.assignSubjectsToStudent(studentId, subjectIds);
   }
 
+  
+  @UseGuards(StudentAuthGuard)
   @Mutation(returns => StudentType)
   updateStudent(
     @Args('id', { type: () => ID }) id: string,
