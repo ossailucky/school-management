@@ -78,9 +78,19 @@ export class TeachersService {
     }
   }
 
-  update(id: number, updateTeacherInput: UpdateTeacherInput) {
-    return `This action updates a #${id} teacher`;
+async updateTeacher(id: string, updateTeacherInput: UpdateTeacherInput): Promise<Teacher> {
+  try {
+    const teacher = await this.teacherRepository.findOneBy({id: id});
+    if(teacher){
+      Object.assign(teacher, updateTeacherInput);
+
+      return await this.teacherRepository.save(teacher);
+    }
+  } catch (error) {
+    throw new error;
   }
+
+}
 
  async removeTeacher(id: string): Promise<String> {
     try {

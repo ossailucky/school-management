@@ -135,7 +135,7 @@ type Mutation {
   removeSubject(id: ID!): String!
   createTeacher(createTeacherInput: CreateTeacherInput!): teacher!
   assignSubjectsToTeacher(assignSubjectsToTeacher: AssignSubjectToTeacherInput!): teacher!
-  updateTeacher(updateTeacherInput: UpdateTeacherInput!): teacher!
+  updateTeacher(id: ID!, updateTeacherInput: UpdateTeacherInput!): teacher!
   removeTeacher(id: ID!): String!
   createStudent(createStudentInput: CreateStudentInput!): student!
   assignParentsToStudent(assigParentsToStudent: AssignParentsToStudentInput!): student!
@@ -223,7 +223,6 @@ input UpdateTeacherInput {
   DOB: String
   gender: String
   subjects: [ID!] = []
-  id: Int!
 }
 
 input CreateStudentInput {

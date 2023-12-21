@@ -51,9 +51,12 @@ export class TeachersResolver {
     return  await this.teachersService.findOne(id);
   }
 
-  @Mutation(() => TeacherType)
-  updateTeacher(@Args('updateTeacherInput') updateTeacherInput: UpdateTeacherInput) {
-    return this.teachersService.update(updateTeacherInput.id, updateTeacherInput);
+  @Mutation(returns => TeacherType)
+  updateTeacher(
+    @Args('id', { type: () => ID }) id: string,
+    @Args('updateTeacherInput') updateTeacherInput: UpdateTeacherInput
+    ) {
+    return this.teachersService.updateTeacher(id, updateTeacherInput);
   }
 
   @UseGuards(GqlAuthGuard, RolesGuard)
