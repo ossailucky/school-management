@@ -53,10 +53,13 @@ export class ParentsResolver {
     return await this.parentsService.assignStudentsToParent(parentId, studentIds);
   }
 
-  // @Mutation(() => Parent)
-  // updateParent(@Args('updateParentInput') updateParentInput: UpdateParentInput) {
-  //   return this.parentsService.update(updateParentInput.id, updateParentInput);
-  // }
+  @Mutation(returns => ParentType)
+  updateParent(
+    @Args('updateParentInput') updateParentInput: UpdateParentInput,
+    @Args('id', { type: () => ID }) id: string
+  ) {
+    return this.parentsService.updateParent(id, updateParentInput);
+  }
 
   @UseGuards(GqlAuthGuard, RolesGuard)
   @hasRoles(Role.ADMIN, Role.SECRETARY)

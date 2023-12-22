@@ -75,8 +75,17 @@ export class ParentsService {
     }
   }
 
-  update(id: number, updateParentInput: UpdateParentInput) {
-    return `This action updates a #${id} parent`;
+  async updateParent(id: string, updateParent: UpdateParentInput):Promise<Parents> {
+    try {
+      const parent = await this.parentRepository.findOneBy({id:id});
+      if(parent){
+        Object.assign(parent, updateParent);
+
+        return await this.parentRepository.save(parent);
+      }
+    } catch (error) {
+      throw new error;
+    }
   }
 
   async removeParent(id: string): Promise<String> {

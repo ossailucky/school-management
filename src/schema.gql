@@ -143,6 +143,7 @@ type Mutation {
   updateStudent(id: ID!, updateStudentInput: UpdateStudentInput!): student!
   removeStudent(id: ID!): String!
   createParent(createParentInput: CreateParentInput!): parent!
+  updateParent(updateParentInput: UpdateParentInput!, id: ID!): parent!
   removeParent(id: ID!): String!
   updateAuthParent(updateAuthParentInput: String!): AuthParent!
   removeAuthParent(id: Int!): AuthParent!
@@ -268,4 +269,14 @@ input CreateParentInput {
   role: String!
   gender: String!
   children: [ID!]! = []
+}
+
+input UpdateParentInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  role: String
+  gender: String
+  children: [ID!] = []
 }
