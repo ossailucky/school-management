@@ -53,6 +53,7 @@ export class ParentsResolver {
     return await this.parentsService.assignStudentsToParent(parentId, studentIds);
   }
 
+  @UseGuards(ParentAuthGuard)
   @Mutation(returns => ParentType)
   updateParent(
     @Args('updateParentInput') updateParentInput: UpdateParentInput,
