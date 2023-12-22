@@ -63,6 +63,8 @@ export class SubjectResolver {
   }
 
 
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Mutation(returns => SubjectType)
   updateSubject(
     @Args('id', { type: () => ID }) id: string,
