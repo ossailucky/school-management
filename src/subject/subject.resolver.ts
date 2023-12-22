@@ -63,10 +63,13 @@ export class SubjectResolver {
   }
 
 
-  // @Mutation(() => Subject)
-  // updateSubject(@Args('updateSubjectInput') updateSubjectInput: UpdateSubjectInput) {
-  //   return this.subjectService.update(updateSubjectInput.id, updateSubjectInput);
-  // }
+  @Mutation(returns => SubjectType)
+  updateSubject(
+    @Args('id', { type: () => ID }) id: string,
+    @Args('updateSubjectInput') updateSubjectInput: UpdateSubjectInput
+    ) {
+    return this.subjectService.update(id, updateSubjectInput);
+  }
 
   @UseGuards(GqlAuthGuard, RolesGuard)
   @hasRoles(Role.ADMIN, Role.SECRETARY)

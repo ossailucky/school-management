@@ -89,8 +89,17 @@ export class SubjectService {
     }
   }
 
-  update(id: number, updateSubjectInput: UpdateSubjectInput) {
-    return `This action updates a #${id} subject`;
+ async  update(id: string, updateSubject: UpdateSubjectInput): Promise<Subject> {
+    try {
+      const subject = await this.subjectRepository.findOneBy({id:id});
+      if(subject){
+        Object.assign(subject,updateSubject);
+
+        return await this.subjectRepository.save(subject);
+      }
+    } catch (error) {
+      throw new error;
+    }
   }
 
  async removeSubject(id: string): Promise<String> {
