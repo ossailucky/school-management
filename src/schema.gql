@@ -22,13 +22,6 @@ type auth {
   access_token: String!
 }
 
-type classroom {
-  id: ID!
-  className: String!
-  classSubjects: String!
-  students: [user!]!
-}
-
 type teacher {
   id: ID!
   firstName: String!
@@ -44,6 +37,13 @@ type subject {
   name: String!
   className: [classroom!]!
   teachers: [teacher!]!
+  students: [user!]!
+}
+
+type classroom {
+  id: ID!
+  className: String!
+  classSubjects: [subject!]!
   students: [user!]!
 }
 

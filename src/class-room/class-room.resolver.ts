@@ -73,4 +73,9 @@ export class ClassRoomResolver {
     return await this.studentService.getManyStudents(classRoom.students);
   }
 
+  @ResolveField()
+  async classSubjects(@Parent() classRoom: ClassRoom){
+    return await this.subjectService.getManySubjects(classRoom.classSubjects);
+  }
+
 }
