@@ -10,6 +10,7 @@ import { Role } from 'src/user/entities/user.entity';
 import { GqlAuthGuard } from 'src/auth/guards/jwt-auth-guard';
 import { hasRoles } from 'src/auth/decorators/roles.decorators';
 import { UserService } from 'src/user/user.service';
+import { AssignClassRoom } from './dto/assign-dto';
 
 @Resolver(of => ClassRoomType)
 export class ClassRoomResolver {
@@ -35,12 +36,13 @@ export class ClassRoomResolver {
     return this.classRoomService.findOne(id);
   }
 
-  // @UseGuards(GqlAuthGuard, RolesGuard)
-  // @hasRoles(Role.ADMIN, Role.SECRETARY)
-  // @Mutation(() => ClassRoomType)
-  // assignStudentToClass(@Args('updateClassRoomInput') updateClassRoomInput: UpdateClassRoomInput) {
-  //   return this.classRoomService.assignStudentAClass(updateClassRoomInput.id, updateClassRoomInput.studentsId);
-  // }
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
+  @Mutation(returns => ClassRoomType)
+  assignStudentToClass(@Args('assignStudentClass') assignStudentClass: AssignClassRoom) {
+    const { classId, studentIds} = assignStudentClass;
+    return this.classRoomService.assignStudentAClass(classId, studentIds);
+  }
 
   @Mutation(returns => ClassRoomType)
   updateClassRoom(
