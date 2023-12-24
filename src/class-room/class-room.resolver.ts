@@ -63,6 +63,8 @@ export class ClassRoomResolver {
     }
 
 
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Mutation(returns => String )
   removeClassRoom(@Args('id', { type: () => ID }) id: string) {
     return this.classRoomService.removeClassRoom(id);
