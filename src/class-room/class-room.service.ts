@@ -45,6 +45,19 @@ export class ClassRoomService {
     return await this.classRoomRespository.save(classRoom);
   }
 
+  async updateClassRoom(id:string, updateClassRoom: UpdateClassRoomInput):Promise<ClassRoom> {
+    try {
+      const classRoom = await this.classRoomRespository.findOneBy({id:id});
+      if(classRoom){
+        Object.assign(classRoom, updateClassRoom);
+
+        return await this.classRoomRespository.save(classRoom);
+      }
+    } catch (error) {
+      throw new error;
+    }
+  }
+
   remove(id: number) {
     return `This action removes a #${id} classRoom`;
   }

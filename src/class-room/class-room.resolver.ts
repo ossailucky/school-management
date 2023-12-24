@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, ID } from '@nestjs/graphql';
 import { ClassRoomService } from './class-room.service';
 import { ClassRoom } from './entities/class-room.entity';
 import { CreateClassRoomInput } from './dto/create-class-room.input';
@@ -35,12 +35,21 @@ export class ClassRoomResolver {
     return this.classRoomService.findOne(id);
   }
 
-  @UseGuards(GqlAuthGuard, RolesGuard)
-  @hasRoles(Role.ADMIN, Role.SECRETARY)
-  @Mutation(() => ClassRoomType)
-  updateClassRoom(@Args('updateClassRoomInput') updateClassRoomInput: UpdateClassRoomInput) {
-    return this.classRoomService.assignStudentAClass(updateClassRoomInput.id, updateClassRoomInput.studentsId);
-  }
+  // @UseGuards(GqlAuthGuard, RolesGuard)
+  // @hasRoles(Role.ADMIN, Role.SECRETARY)
+  // @Mutation(() => ClassRoomType)
+  // assignStudentToClass(@Args('updateClassRoomInput') updateClassRoomInput: UpdateClassRoomInput) {
+  //   return this.classRoomService.assignStudentAClass(updateClassRoomInput.id, updateClassRoomInput.studentsId);
+  // }
+
+  @Mutation(returns => ClassRoomType)
+  updateClassRoom(
+    @Args("id",{ type: () => ID }) id: string,
+    @Args('updateClassRoomInput') updateClassRoom: UpdateClassRoomInput
+    ){
+      return this.classRoomService.updateClassRoom(id, updateClassRoom);
+    }
+
 
   @Mutation(() => ClassRoomType)
   removeClassRoom(@Args('id', { type: () => Int }) id: number) {
