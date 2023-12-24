@@ -107,14 +107,14 @@ type Query {
   login(email: String!, password: String!): auth!
   AllClassRoom: [classroom!]!
   ClassRoom(id: String!): classroom!
-  subjects: [subject!]!
-  subject(id: ID!): subject!
-  teachers: [teacher!]!
-  teacher(id: String!): teacher!
   students: [student!]!
   student(id: String!): student!
   parents: [parent!]!
   parent(id: String!): parent!
+  subjects: [subject!]!
+  subject(id: ID!): subject!
+  teachers: [teacher!]!
+  teacher(id: String!): teacher!
   studentLogin(email: String!, password: String!): studentAuth!
   parentLogin(email: String!, password: String!): parentauth!
   authParents: [AuthParent!]!
@@ -131,6 +131,14 @@ type Mutation {
   assignSubjectsToClass(assignSubjectsClass: AssignSubjectClass!): classroom!
   updateClassRoom(id: ID!, updateClassRoomInput: UpdateClassRoomInput!): classroom!
   removeClassRoom(id: Int!): classroom!
+  createStudent(createStudentInput: CreateStudentInput!): student!
+  assignParentsToStudent(assigParentsToStudent: AssignParentsToStudentInput!): student!
+  assignSubjectsToStudent(assignSubjectsToStudent: AssignSubjectsToStudentInput!): student!
+  updateStudent(id: ID!, updateStudentInput: UpdateStudentInput!): student!
+  removeStudent(id: ID!): String!
+  createParent(createParentInput: CreateParentInput!): parent!
+  updateParent(updateParentInput: UpdateParentInput!, id: ID!): parent!
+  removeParent(id: ID!): String!
   createSubject(createSubjectInput: CreateSubjectInput!): subject!
   assignTeacherToSubject(assignTeacherToSubject: AssignTeacherToSubjectInput!): subject!
   assignSubjectToStudents(assignStudentToSubject: AssignSudentsToSubjectInput!): subject!
@@ -140,14 +148,6 @@ type Mutation {
   assignSubjectsToTeacher(assignSubjectsToTeacher: AssignSubjectToTeacherInput!): teacher!
   updateTeacher(id: ID!, updateTeacherInput: UpdateTeacherInput!): teacher!
   removeTeacher(id: ID!): String!
-  createStudent(createStudentInput: CreateStudentInput!): student!
-  assignParentsToStudent(assigParentsToStudent: AssignParentsToStudentInput!): student!
-  assignSubjectsToStudent(assignSubjectsToStudent: AssignSubjectsToStudentInput!): student!
-  updateStudent(id: ID!, updateStudentInput: UpdateStudentInput!): student!
-  removeStudent(id: ID!): String!
-  createParent(createParentInput: CreateParentInput!): parent!
-  updateParent(updateParentInput: UpdateParentInput!, id: ID!): parent!
-  removeParent(id: ID!): String!
   updateAuthParent(updateAuthParentInput: String!): AuthParent!
   removeAuthParent(id: Int!): AuthParent!
 }
@@ -194,55 +194,6 @@ input UpdateClassRoomInput {
   classSubjects: [String!]
   students: [ID!] = []
   studentsId: [ID!]
-}
-
-input CreateSubjectInput {
-  name: String!
-  teachers: [ID!]! = []
-  className: [ID!]! = []
-  students: [ID!]! = []
-}
-
-input AssignTeacherToSubjectInput {
-  subjectId: ID!
-  teacherIds: [ID!]!
-}
-
-input AssignSudentsToSubjectInput {
-  subjectId: ID!
-  studentIds: [ID!]!
-}
-
-input UpdateSubjectInput {
-  name: String
-  teachers: [ID!] = []
-  className: [ID!] = []
-  students: [ID!] = []
-}
-
-input CreateTeacherInput {
-  firstName: String!
-  lastName: String!
-  email: String!
-  password: String!
-  DOB: String!
-  gender: String!
-  subjects: [ID!]! = []
-}
-
-input AssignSubjectToTeacherInput {
-  teacherId: ID!
-  subjectIds: [ID!]!
-}
-
-input UpdateTeacherInput {
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  DOB: String
-  gender: String
-  subjects: [ID!] = []
 }
 
 input CreateStudentInput {
@@ -298,4 +249,53 @@ input UpdateParentInput {
   role: String
   gender: String
   children: [ID!] = []
+}
+
+input CreateSubjectInput {
+  name: String!
+  teachers: [ID!]! = []
+  className: [ID!]! = []
+  students: [ID!]! = []
+}
+
+input AssignTeacherToSubjectInput {
+  subjectId: ID!
+  teacherIds: [ID!]!
+}
+
+input AssignSudentsToSubjectInput {
+  subjectId: ID!
+  studentIds: [ID!]!
+}
+
+input UpdateSubjectInput {
+  name: String
+  teachers: [ID!] = []
+  className: [ID!] = []
+  students: [ID!] = []
+}
+
+input CreateTeacherInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  DOB: String!
+  gender: String!
+  subjects: [ID!]! = []
+}
+
+input AssignSubjectToTeacherInput {
+  teacherId: ID!
+  subjectIds: [ID!]!
+}
+
+input UpdateTeacherInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  DOB: String
+  gender: String
+  subjects: [ID!] = []
 }

@@ -12,12 +12,15 @@ import { hasRoles } from 'src/auth/decorators/roles.decorators';
 import { UserService } from 'src/user/user.service';
 import { AssignClassRoom } from './dto/assign-dto';
 import { AssignSubjectClass } from './dto/assign-subjects';
+import { StudentsService } from 'src/students/students.service';
+import { SubjectService } from 'src/subject/subject.service';
 
 @Resolver(of => ClassRoomType)
 export class ClassRoomResolver {
   constructor(
     private readonly classRoomService: ClassRoomService,
-    private userService:UserService
+    private studentService:StudentsService,
+    private subjectService: SubjectService
     ) {}
 
   @UseGuards(GqlAuthGuard, RolesGuard)
@@ -67,7 +70,7 @@ export class ClassRoomResolver {
 
   @ResolveField()
   async students(@Parent() classRoom: ClassRoom){
-    return await this.userService.getManyStudents(classRoom.students);
+    return await this.studentService.getManyStudents(classRoom.students);
   }
 
 }
