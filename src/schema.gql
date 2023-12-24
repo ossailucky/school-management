@@ -130,7 +130,7 @@ type Mutation {
   assignStudentToClass(assignStudentClass: AssignClassRoom!): classroom!
   assignSubjectsToClass(assignSubjectsClass: AssignSubjectClass!): classroom!
   updateClassRoom(id: ID!, updateClassRoomInput: UpdateClassRoomInput!): classroom!
-  removeClassRoom(id: Int!): classroom!
+  removeClassRoom(id: ID!): String!
   createStudent(createStudentInput: CreateStudentInput!): student!
   assignParentsToStudent(assigParentsToStudent: AssignParentsToStudentInput!): student!
   assignSubjectsToStudent(assignSubjectsToStudent: AssignSubjectsToStudentInput!): student!

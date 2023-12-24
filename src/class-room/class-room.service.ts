@@ -71,7 +71,14 @@ export class ClassRoomService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} classRoom`;
+  async removeClassRoom(id: string): Promise<String> {
+    try {
+      const query = await this.classRoomRespository.delete({id:id});
+      if(query.affected > 0){
+        return  `class room with the ID ${id} was deleted successfully `;
+      }
+    } catch (error) {
+      throw new error;
+    }
   }
 }

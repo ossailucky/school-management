@@ -63,9 +63,9 @@ export class ClassRoomResolver {
     }
 
 
-  @Mutation(() => ClassRoomType)
-  removeClassRoom(@Args('id', { type: () => Int }) id: number) {
-    return this.classRoomService.remove(id);
+  @Mutation(returns => String )
+  removeClassRoom(@Args('id', { type: () => ID }) id: string) {
+    return this.classRoomService.removeClassRoom(id);
   }
 
   @ResolveField()
