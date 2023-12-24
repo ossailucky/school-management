@@ -11,6 +11,7 @@ import { GqlAuthGuard } from 'src/auth/guards/jwt-auth-guard';
 import { hasRoles } from 'src/auth/decorators/roles.decorators';
 import { UserService } from 'src/user/user.service';
 import { AssignClassRoom } from './dto/assign-dto';
+import { AssignSubjectClass } from './dto/assign-subjects';
 
 @Resolver(of => ClassRoomType)
 export class ClassRoomResolver {
@@ -42,6 +43,12 @@ export class ClassRoomResolver {
   assignStudentToClass(@Args('assignStudentClass') assignStudentClass: AssignClassRoom) {
     const { classId, studentIds} = assignStudentClass;
     return this.classRoomService.assignStudentAClass(classId, studentIds);
+  }
+
+  @Mutation(returns => ClassRoomType)
+  assignSubjectsToClass(@Args('assignSubjectsClass') assignSubjectsClass: AssignSubjectClass) {
+    const { classId, subjectIds} = assignSubjectsClass;
+    return this.classRoomService.assignSubjectsAClass(classId, subjectIds);
   }
 
   @Mutation(returns => ClassRoomType)

@@ -45,6 +45,19 @@ export class ClassRoomService {
     return await this.classRoomRespository.save(classRoom);
   }
 
+  async assignSubjectsAClass(id:string, subjectsId: string[]): Promise<ClassRoom>{
+
+
+    const classRoom = await this.classRoomRespository.findOneBy({id: id});
+
+
+    classRoom.classSubjects = [...classRoom.classSubjects, ...subjectsId];
+
+
+
+    return await this.classRoomRespository.save(classRoom);
+  }
+
   async updateClassRoom(id:string, updateClassRoom: UpdateClassRoomInput):Promise<ClassRoom> {
     try {
       const classRoom = await this.classRoomRespository.findOneBy({id:id});

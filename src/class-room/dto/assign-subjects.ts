@@ -3,7 +3,7 @@ import { IsOptional, IsUUID } from "class-validator";
 
 
 @InputType()
-export class AssignClassRoom{
+export class AssignSubjectClass{
     @IsUUID()
     @Field(type => ID)
     classId: string;
@@ -11,7 +11,7 @@ export class AssignClassRoom{
     @IsOptional()
     @IsUUID("4", {each: true})
     @Field(type => [ID])
-    studentIds: string[];
+    subjectIds: string[];
 
     
 }

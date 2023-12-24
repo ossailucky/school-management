@@ -128,6 +128,7 @@ type Mutation {
   removeUser(id: String!): String!
   createClassRoom(createClassRoomInput: CreateClassRoomInput!): classroom!
   assignStudentToClass(assignStudentClass: AssignClassRoom!): classroom!
+  assignSubjectsToClass(assignSubjectsClass: AssignSubjectClass!): classroom!
   updateClassRoom(id: ID!, updateClassRoomInput: UpdateClassRoomInput!): classroom!
   removeClassRoom(id: Int!): classroom!
   createSubject(createSubjectInput: CreateSubjectInput!): subject!
@@ -181,7 +182,11 @@ input CreateClassRoomInput {
 input AssignClassRoom {
   classId: ID!
   studentIds: [ID!]!
-  classSubjects: [String!]
+}
+
+input AssignSubjectClass {
+  classId: ID!
+  subjectIds: [ID!]!
 }
 
 input UpdateClassRoomInput {
