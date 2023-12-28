@@ -1,11 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { CreateJuniorGradeInput } from './dto/create-junior-grade.input';
 import { UpdateJuniorGradeInput } from './dto/update-junior-grade.input';
+import { InjectRepository } from '@nestjs/typeorm';
+import {Repository } from 'typeorm';
+import { JuniorGrade } from './entities/junior-grade.entity';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class JuniorGradeService {
-  create(createJuniorGradeInput: CreateJuniorGradeInput) {
-    return 'This action adds a new juniorGrade';
+  constructor(@InjectRepository(JuniorGrade) private juniorGradeRepository: Repository<JuniorGrade>) {}
+
+  async createGrade(createJuniorGradeInput: CreateJuniorGradeInput): Promise<JuniorGrade> {
+    const {
+      studentID, 
+      subjects,
+      average,
+      classPosition,
+      remark
+    } = createJuniorGradeInput;
+
+    const grade = this.juniorGradeRepository.create({
+      id: uuid(),
+      studentID: studentID,
+      subjects: subjects,
+      average: average,
+      classPosition: classPosition,
+      remark: remark,
+
+
+    })
+    return await this.juniorGradeRepository.save(grade);
   }
 
   findAll() {

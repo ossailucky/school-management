@@ -101,6 +101,24 @@ type teacherauth {
   access_token: String!
 }
 
+type SubjectInfoType {
+  subjectID: ID!
+  testScore: Float!
+  CA: Float!
+  examScore: Float!
+  totalScore: Float!
+  position: String!
+}
+
+type JuniorGrade {
+  id: ID!
+  studentID: student!
+  subjects: [SubjectInfoType!]!
+  average: Float!
+  classPosition: String!
+  remark: String!
+}
+
 type Query {
   getAllUsers: [user!]!
   findOne(id: String!): user!
@@ -120,6 +138,7 @@ type Query {
   authParents: [AuthParent!]!
   authParent(id: Int!): AuthParent!
   teacherLogin(email: String!, password: String!): teacherauth!
+  juniorGrade(id: Int!): JuniorGrade!
 }
 
 type Mutation {
@@ -150,6 +169,9 @@ type Mutation {
   removeTeacher(id: ID!): String!
   updateAuthParent(updateAuthParentInput: String!): AuthParent!
   removeAuthParent(id: Int!): AuthParent!
+  createJuniorGrade(createJuniorGradeInput: CreateJuniorGradeInput!): JuniorGrade!
+  updateJuniorGrade(updateJuniorGradeInput: UpdateJuniorGradeInput!): JuniorGrade!
+  removeJuniorGrade(id: Int!): JuniorGrade!
 }
 
 input CreateUserInput {
@@ -298,4 +320,30 @@ input UpdateTeacherInput {
   DOB: String
   gender: String
   subjects: [ID!] = []
+}
+
+input CreateJuniorGradeInput {
+  studentID: String!
+  subjects: [SubjectInput!]!
+  average: Float!
+  classPosition: String!
+  remark: String!
+}
+
+input SubjectInput {
+  subjectID: ID!
+  testScore: Float!
+  CA: Float!
+  examScore: Float!
+  totalScore: Float!
+  position: String!
+}
+
+input UpdateJuniorGradeInput {
+  studentID: String
+  subjects: [SubjectInput!]
+  average: Float
+  classPosition: String
+  remark: String
+  id: Int!
 }

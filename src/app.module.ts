@@ -26,6 +26,7 @@ import { Teacher } from './teachers/entities/teacher.entity';
 import { TeacherJwtStrategy } from './auth-teachers/guards/teacher-jwt.strategy';
 import { Subject } from './subject/entities/subject.entity';
 import { JuniorGradeModule } from './junior-grade/junior-grade.module';
+import { JuniorGrade } from './junior-grade/entities/junior-grade.entity';
 
 
 @Module({
@@ -41,7 +42,8 @@ import { JuniorGradeModule } from './junior-grade/junior-grade.module';
         Student,
         Parents,
         Teacher,
-        Subject
+        Subject,
+        JuniorGrade
       ]
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
