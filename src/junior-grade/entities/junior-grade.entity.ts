@@ -1,10 +1,5 @@
 import { Entity, PrimaryColumn, Column, ObjectIdColumn, DeleteDateColumn, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn } from  'typeorm';
 
-function ArrayOfObjects(options: { subjectID: string, testScore: number, CA: number, examScore: number, totalScore: number, position: string }): PropertyDecorator {
-  return function (target: Object, propertyKey: string | symbol) {
-    Column({ type: 'json', default: [], array: true, nullable: true })(target, propertyKey);
-  };
-}
 
 @Entity()
 export class JuniorGrade {
