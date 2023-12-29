@@ -102,7 +102,7 @@ type teacherauth {
 }
 
 type SubjectInfoType {
-  subjectID: ID!
+  subjectID: subject!
   testScore: Float!
   CA: Float!
   examScore: Float!
@@ -117,6 +117,7 @@ type JuniorGrade {
   average: Float!
   classPosition: String!
   remark: String!
+  subjectID: subject!
 }
 
 type Query {
