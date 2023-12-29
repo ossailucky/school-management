@@ -19,9 +19,9 @@ export class JuniorGradeResolver {
     return this.juniorGradeService.createGrade(createJuniorGradeInput);
   }
 
-  @Query(returns => [JuniorGradeType], { name: 'juniorGrade' })
+  @Query(returns => [JuniorGradeType], { name: 'juniorGrades' })
   findAll() {
-    return this.juniorGradeService.findAll();
+    return this.juniorGradeService.findAllGrades();
   }
 
   @Query(returns => JuniorGradeType, { name: 'juniorGrade' })
@@ -39,10 +39,11 @@ export class JuniorGradeResolver {
     return this.juniorGradeService.remove(id);
   }
 
-  @ResolveField(()=>SubjectType,{name:"subjectID"})
-  async resolveSubject(@Parent() grade: JuniorGrade){
-    console.log(grade.subjects.map(subject=>subject.subjectID));
+  @ResolveField(returns => SubjectType,{name:"subjectID"})
+  async subjectID(@Parent() grade: JuniorGrade){
+    const subjectIDs = grade.subjects.map(subject => subject.subjectID);
+    console.log(subjectIDs);
     
-    return await this.subjectService.getManySubjects(grade.subjects.map(subject=>subject.subjectID));
+    return await this.subjectService.getManySubjects(subjectIDs);
   }
 }

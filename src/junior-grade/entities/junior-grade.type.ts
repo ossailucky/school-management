@@ -8,6 +8,9 @@ export class SubjectInfoType {
     subjectID: string;
 
     @Field()
+    subjectName: string;
+
+    @Field()
     testScore: number;
 
     @Field()

@@ -7,6 +7,9 @@ export class SubjectInput {
     subjectID: string;
 
     @Field()
+    subjectName: string;
+
+    @Field()
     testScore: number;
 
     @Field()

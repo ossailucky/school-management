@@ -13,7 +13,7 @@ export class JuniorGrade {
   studentID: string;
 
   @Column({ type: 'json', default: [], array: true, nullable: true })
-  subjects: { subjectID: string, testScore: number, CA: number, examScore: number, totalScore: number, position: string } [];
+  subjects: { subjectID: string, subjectName: string, testScore: number, CA: number, examScore: number, totalScore: number, position: string } [];
 
   @Column()
   average: number;

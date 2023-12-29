@@ -103,6 +103,7 @@ type teacherauth {
 
 type SubjectInfoType {
   subjectID: subject!
+  subjectName: String!
   testScore: Float!
   CA: Float!
   examScore: Float!
@@ -139,6 +140,7 @@ type Query {
   authParents: [AuthParent!]!
   authParent(id: Int!): AuthParent!
   teacherLogin(email: String!, password: String!): teacherauth!
+  juniorGrades: [JuniorGrade!]!
   juniorGrade(id: Int!): JuniorGrade!
 }
 
@@ -333,6 +335,7 @@ input CreateJuniorGradeInput {
 
 input SubjectInput {
   subjectID: ID!
+  subjectName: String!
   testScore: Float!
   CA: Float!
   examScore: Float!

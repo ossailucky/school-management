@@ -32,8 +32,12 @@ export class JuniorGradeService {
     return await this.juniorGradeRepository.save(grade);
   }
 
-  findAll() {
-    return `This action returns all juniorGrade`;
+  async findAllGrades(): Promise<JuniorGrade[]> {
+    try {
+      return await this.juniorGradeRepository.find();
+    } catch (error) {
+      throw new error;
+    }
   }
 
   findOne(id: number) {
