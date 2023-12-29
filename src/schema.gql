@@ -118,7 +118,6 @@ type JuniorGrade {
   average: Float!
   classPosition: String!
   remark: String!
-  subjectID: subject!
 }
 
 type Query {
@@ -141,7 +140,7 @@ type Query {
   authParent(id: Int!): AuthParent!
   teacherLogin(email: String!, password: String!): teacherauth!
   juniorGrades: [JuniorGrade!]!
-  juniorGrade(id: Int!): JuniorGrade!
+  juniorGrade(id: ID!): JuniorGrade!
 }
 
 type Mutation {

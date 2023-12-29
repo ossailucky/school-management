@@ -40,8 +40,12 @@ export class JuniorGradeService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} juniorGrade`;
+  async findOne(id: string): Promise<JuniorGrade> {
+    try {
+      return await this.juniorGradeRepository.findOneBy({id:id})
+    } catch (error) {
+      throw new error;
+    }
   }
 
   update(id: number, updateJuniorGradeInput: UpdateJuniorGradeInput) {

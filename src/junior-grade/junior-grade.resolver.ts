@@ -1,17 +1,16 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, ID } from '@nestjs/graphql';
 import { JuniorGradeService } from './junior-grade.service';
 import { JuniorGrade } from './entities/junior-grade.entity';
 import { CreateJuniorGradeInput } from './dto/create-junior-grade.input';
 import { UpdateJuniorGradeInput } from './dto/update-junior-grade.input';
 import { JuniorGradeType } from './entities/junior-grade.type';
-import { SubjectService } from 'src/subject/subject.service';
-import { SubjectType } from 'src/subject/entities/subject.type';
+import { StudentsService } from 'src/students/students.service';
 
 @Resolver(() => JuniorGradeType)
 export class JuniorGradeResolver {
   constructor(
     private readonly juniorGradeService: JuniorGradeService,
-    private readonly subjectService: SubjectService
+    private readonly studentService: StudentsService
     ) {}
 
   @Mutation(returns => JuniorGradeType)
@@ -25,7 +24,7 @@ export class JuniorGradeResolver {
   }
 
   @Query(returns => JuniorGradeType, { name: 'juniorGrade' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => ID }) id: string) {
     return this.juniorGradeService.findOne(id);
   }
 
@@ -39,11 +38,9 @@ export class JuniorGradeResolver {
     return this.juniorGradeService.remove(id);
   }
 
-  @ResolveField(returns => SubjectType,{name:"subjectID"})
-  async subjectID(@Parent() grade: JuniorGrade){
-    const subjectIDs = grade.subjects.map(subject => subject.subjectID);
-    console.log(subjectIDs);
+  @ResolveField()
+  async studentID(@Parent() grade: JuniorGrade){
     
-    return await this.subjectService.getManySubjects(subjectIDs);
+    return await this.studentService.findOne(grade.studentID);
   }
 }
