@@ -5,6 +5,11 @@ import { CreateJuniorGradeInput } from './dto/create-junior-grade.input';
 import { UpdateJuniorGradeInput } from './dto/update-junior-grade.input';
 import { JuniorGradeType } from './entities/junior-grade.type';
 import { StudentsService } from 'src/students/students.service';
+import { UseGuards } from '@nestjs/common';
+import { hasRoles } from 'src/auth/decorators/roles.decorators';
+import { GqlAuthGuard } from 'src/auth/guards/jwt-auth-guard';
+import { RolesGuard } from 'src/auth/guards/roles.guards';
+import { Role } from 'src/user/entities/user.entity';
 
 @Resolver(() => JuniorGradeType)
 export class JuniorGradeResolver {
@@ -23,6 +28,8 @@ export class JuniorGradeResolver {
     return this.juniorGradeService.findAllGrades();
   }
 
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Query(returns => JuniorGradeType, { name: 'juniorGrade' })
   findOne(@Args('id', { type: () => ID }) id: string) {
     return this.juniorGradeService.findOne(id);
