@@ -48,8 +48,17 @@ export class JuniorGradeService {
     }
   }
 
-  update(id: number, updateJuniorGradeInput: UpdateJuniorGradeInput) {
-    return `This action updates a #${id} juniorGrade`;
+  async updateJuniorGrade(id: string, updateJuniorGradeInput: UpdateJuniorGradeInput): Promise<JuniorGrade> {
+   try {
+     const grade = await this.juniorGradeRepository.findOneBy({id:id});
+     if(grade){
+      Object.assign(grade,updateJuniorGradeInput);
+
+      return await this.juniorGradeRepository.save(grade);
+     }
+   } catch (error) {
+      throw new error;
+   }
   }
 
   async removeJuniorGrade(id: string): Promise<String> {

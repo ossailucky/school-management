@@ -172,7 +172,7 @@ type Mutation {
   updateAuthParent(updateAuthParentInput: String!): AuthParent!
   removeAuthParent(id: Int!): AuthParent!
   createJuniorGrade(createJuniorGradeInput: CreateJuniorGradeInput!): JuniorGrade!
-  updateJuniorGrade(updateJuniorGradeInput: UpdateJuniorGradeInput!): JuniorGrade!
+  updateJuniorGrade(updateJuniorGradeInput: UpdateJuniorGradeInput!, id: ID!): JuniorGrade!
   removeJuniorGrade(id: ID!): String!
 }
 
@@ -348,5 +348,4 @@ input UpdateJuniorGradeInput {
   average: Float
   classPosition: String
   remark: String
-  id: Int!
 }

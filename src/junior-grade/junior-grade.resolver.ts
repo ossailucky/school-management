@@ -11,6 +11,7 @@ import { GqlAuthGuard } from 'src/auth/guards/jwt-auth-guard';
 import { RolesGuard } from 'src/auth/guards/roles.guards';
 import { Role } from 'src/user/entities/user.entity';
 
+
 @Resolver(() => JuniorGradeType)
 export class JuniorGradeResolver {
   constructor(
@@ -36,8 +37,11 @@ export class JuniorGradeResolver {
   }
 
   @Mutation(returns => JuniorGradeType)
-  updateJuniorGrade(@Args('updateJuniorGradeInput') updateJuniorGradeInput: UpdateJuniorGradeInput) {
-    return this.juniorGradeService.update(updateJuniorGradeInput.id, updateJuniorGradeInput);
+  updateJuniorGrade(
+    @Args('updateJuniorGradeInput') updateJuniorGradeInput: UpdateJuniorGradeInput,
+    @Args('id', { type: () => ID }) id: string
+    ) {
+    return this.juniorGradeService.updateJuniorGrade(id, updateJuniorGradeInput);
   }
 
   @UseGuards(GqlAuthGuard, RolesGuard)
