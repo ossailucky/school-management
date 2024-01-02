@@ -40,6 +40,8 @@ export class JuniorGradeResolver {
     return this.juniorGradeService.update(updateJuniorGradeInput.id, updateJuniorGradeInput);
   }
 
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Mutation(returns => String)
   removeJuniorGrade(@Args('id', { type: () => ID }) id: string) {
     return this.juniorGradeService.removeJuniorGrade(id);
