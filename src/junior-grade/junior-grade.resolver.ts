@@ -36,6 +36,8 @@ export class JuniorGradeResolver {
     return this.juniorGradeService.findOne(id);
   }
 
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Mutation(returns => JuniorGradeType)
   updateJuniorGrade(
     @Args('updateJuniorGradeInput') updateJuniorGradeInput: UpdateJuniorGradeInput,
