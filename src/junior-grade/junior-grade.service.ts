@@ -52,7 +52,14 @@ export class JuniorGradeService {
     return `This action updates a #${id} juniorGrade`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} juniorGrade`;
+  async removeJuniorGrade(id: string): Promise<String> {
+    try {
+      const query = await this.juniorGradeRepository.delete({id:id});
+      if(query.affected > 0){
+        return `Grade with the ID #${id} was deleted succesfully`;
+      }
+    } catch (error) {
+      throw new error;
+    }
   }
 }

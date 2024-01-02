@@ -173,7 +173,7 @@ type Mutation {
   removeAuthParent(id: Int!): AuthParent!
   createJuniorGrade(createJuniorGradeInput: CreateJuniorGradeInput!): JuniorGrade!
   updateJuniorGrade(updateJuniorGradeInput: UpdateJuniorGradeInput!): JuniorGrade!
-  removeJuniorGrade(id: Int!): JuniorGrade!
+  removeJuniorGrade(id: ID!): String!
 }
 
 input CreateUserInput {

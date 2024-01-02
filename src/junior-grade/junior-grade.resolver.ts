@@ -40,9 +40,9 @@ export class JuniorGradeResolver {
     return this.juniorGradeService.update(updateJuniorGradeInput.id, updateJuniorGradeInput);
   }
 
-  @Mutation(returns => JuniorGradeType)
-  removeJuniorGrade(@Args('id', { type: () => Int }) id: number) {
-    return this.juniorGradeService.remove(id);
+  @Mutation(returns => String)
+  removeJuniorGrade(@Args('id', { type: () => ID }) id: string) {
+    return this.juniorGradeService.removeJuniorGrade(id);
   }
 
   @ResolveField()
