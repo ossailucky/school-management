@@ -24,6 +24,8 @@ export class JuniorGradeResolver {
     return this.juniorGradeService.createGrade(createJuniorGradeInput);
   }
 
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @hasRoles(Role.ADMIN, Role.SECRETARY)
   @Query(returns => [JuniorGradeType], { name: 'juniorGrades' })
   findAll() {
     return this.juniorGradeService.findAllGrades();
