@@ -27,6 +27,7 @@ import { TeacherJwtStrategy } from './auth-teachers/guards/teacher-jwt.strategy'
 import { Subject } from './subject/entities/subject.entity';
 import { JuniorGradeModule } from './junior-grade/junior-grade.module';
 import { JuniorGrade } from './junior-grade/entities/junior-grade.entity';
+import { ScheduleModule } from './schedule/schedule.module';
 
 
 @Module({
@@ -61,6 +62,7 @@ import { JuniorGrade } from './junior-grade/entities/junior-grade.entity';
     AuthParentsModule,
     AuthTeachersModule,
     JuniorGradeModule,
+    ScheduleModule,
 
   ],
   providers:[JwtStrategy, StudentJwtStrategy, ParentJwtStrategy, TeacherJwtStrategy]
