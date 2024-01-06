@@ -153,6 +153,7 @@ type Query {
   teacherLogin(email: String!, password: String!): teacherauth!
   juniorGrades: [JuniorGrade!]!
   juniorGrade(id: ID!): JuniorGrade!
+  schedules: [schedule!]!
   schedule(id: Int!): schedule!
 }
 

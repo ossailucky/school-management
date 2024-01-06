@@ -12,9 +12,6 @@ export class ScheduleService {
   constructor(@InjectRepository(Schedule) private scheduleRepository: Repository<Schedule>){}
   async createSchedule(createScheduleInput: CreateScheduleInput): Promise<Schedule>{
     const { eventName, eventDescription, eventDate } = createScheduleInput;
-
-    
-
     try {
       
       const dateObjects: Date[] = [];
@@ -41,8 +38,12 @@ export class ScheduleService {
     }
   }
 
-  findAll() {
-    return `This action returns all schedule`;
+  async findAllSchedule(): Promise<Schedule[]> {
+    try {
+      return await this.scheduleRepository.find();
+    } catch (error) {
+      throw error;
+    }
   }
 
   findOne(id: number) {

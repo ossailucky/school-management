@@ -21,9 +21,9 @@ export class ScheduleResolver {
     return this.scheduleService.createSchedule(createScheduleInput);
   }
 
-  @Query(returns => [ScheduleType], { name: 'schedule' })
+  @Query(returns => [ScheduleType], { name: 'schedules' })
   findAll() {
-    return this.scheduleService.findAll();
+    return this.scheduleService.findAllSchedule();
   }
 
   @Query(returns => ScheduleType, { name: 'schedule' })
