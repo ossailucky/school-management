@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ID } from '@nestjs/graphql';
 import { ScheduleService } from './schedule.service';
 import { Schedule } from './entities/schedule.entity';
 import { CreateScheduleInput } from './dto/create-schedule.input';
@@ -27,8 +27,8 @@ export class ScheduleResolver {
   }
 
   @Query(returns => ScheduleType, { name: 'schedule' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.scheduleService.findOne(id);
+  findOne(@Args('id', { type: () => ID }) id: string) {
+    return this.scheduleService.findOneSchedule(id);
   }
 
   @Mutation(returns => ScheduleType)

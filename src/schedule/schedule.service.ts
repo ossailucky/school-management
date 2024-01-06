@@ -46,8 +46,12 @@ export class ScheduleService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} schedule`;
+ async findOneSchedule(id: string): Promise<Schedule> {
+    try {
+      return await this.scheduleRepository.findOneBy({id:id});
+    } catch (error) {
+      throw error;
+    }
   }
 
   update(id: number, updateScheduleInput: UpdateScheduleInput) {

@@ -154,7 +154,7 @@ type Query {
   juniorGrades: [JuniorGrade!]!
   juniorGrade(id: ID!): JuniorGrade!
   schedules: [schedule!]!
-  schedule(id: Int!): schedule!
+  schedule(id: ID!): schedule!
 }
 
 type Mutation {
