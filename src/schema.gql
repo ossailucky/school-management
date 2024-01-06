@@ -120,6 +120,18 @@ type JuniorGrade {
   remark: String!
 }
 
+type schedule {
+  id: ID!
+  eventName: String!
+  eventDescription: String!
+  eventDate: [DateTime!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Query {
   getAllUsers: [user!]!
   findOne(id: String!): user!
@@ -141,6 +153,7 @@ type Query {
   teacherLogin(email: String!, password: String!): teacherauth!
   juniorGrades: [JuniorGrade!]!
   juniorGrade(id: ID!): JuniorGrade!
+  schedule(id: Int!): schedule!
 }
 
 type Mutation {
@@ -174,6 +187,9 @@ type Mutation {
   createJuniorGrade(createJuniorGradeInput: CreateJuniorGradeInput!): JuniorGrade!
   updateJuniorGrade(updateJuniorGradeInput: UpdateJuniorGradeInput!, id: ID!): JuniorGrade!
   removeJuniorGrade(id: ID!): String!
+  createSchedule(createScheduleInput: CreateScheduleInput!): schedule!
+  updateSchedule(updateScheduleInput: UpdateScheduleInput!): schedule!
+  removeSchedule(id: Int!): schedule!
 }
 
 input CreateUserInput {
@@ -348,4 +364,17 @@ input UpdateJuniorGradeInput {
   average: Float
   classPosition: String
   remark: String
+}
+
+input CreateScheduleInput {
+  eventName: String!
+  eventDescription: String!
+  eventDate: [String!]!
+}
+
+input UpdateScheduleInput {
+  eventName: String
+  eventDescription: String
+  eventDate: [String!]
+  id: Int!
 }

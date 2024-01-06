@@ -28,6 +28,7 @@ import { Subject } from './subject/entities/subject.entity';
 import { JuniorGradeModule } from './junior-grade/junior-grade.module';
 import { JuniorGrade } from './junior-grade/entities/junior-grade.entity';
 import { ScheduleModule } from './schedule/schedule.module';
+import { Schedule } from './schedule/entities/schedule.entity';
 
 
 @Module({
@@ -44,7 +45,8 @@ import { ScheduleModule } from './schedule/schedule.module';
         Parents,
         Teacher,
         Subject,
-        JuniorGrade
+        JuniorGrade,
+        Schedule
       ]
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({

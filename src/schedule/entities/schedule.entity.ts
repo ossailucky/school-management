@@ -1,7 +1,20 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Entity, PrimaryColumn, Column, ObjectIdColumn } from  'typeorm';
 
-@ObjectType()
-export class Schedule {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+
+@Entity()
+export class Schedule{
+  @ObjectIdColumn()
+  _id: string;
+
+  @PrimaryColumn()
+  id: string;
+
+  @Column()
+  eventName: string;
+
+  @Column()
+  eventDescription: string;
+
+  @Column()
+  eventDate: Date[];
 }
