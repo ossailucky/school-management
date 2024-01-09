@@ -34,7 +34,7 @@ export class ScheduleService {
       });     
       return await this.scheduleRepository.save(schedule);
     } catch (error) {
-      throw new error;
+      throw  error;
     }
   }
 
