@@ -28,7 +28,7 @@ export class SubjectService {
 
 
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -36,7 +36,7 @@ export class SubjectService {
     try {
       return await this.subjectRepository.find();
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -44,7 +44,7 @@ export class SubjectService {
     try {
       return await this.subjectRepository.findOneBy({id:id});
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
   
@@ -56,7 +56,7 @@ export class SubjectService {
 
       return await this.subjectRepository.save(subject);
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -69,7 +69,7 @@ export class SubjectService {
       
       return await this.subjectRepository.save(subject);
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -85,7 +85,7 @@ export class SubjectService {
         }
       })
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -98,7 +98,7 @@ export class SubjectService {
         return await this.subjectRepository.save(subject);
       }
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -109,7 +109,7 @@ export class SubjectService {
         return  `Subject with the ID ${id} was deleted successfully `;
       }
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 }
