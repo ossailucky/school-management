@@ -57,7 +57,7 @@ export class UserService {
         return user? "user is deleted": "Problem removing user";
       }
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 

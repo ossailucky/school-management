@@ -67,7 +67,7 @@ export class ClassRoomService {
         return await this.classRoomRespository.save(classRoom);
       }
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -78,7 +78,7 @@ export class ClassRoomService {
         return  `class room with the ID ${id} was deleted successfully `;
       }
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 }

@@ -36,7 +36,7 @@ export class JuniorGradeService {
     try {
       return await this.juniorGradeRepository.find();
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -44,7 +44,7 @@ export class JuniorGradeService {
     try {
       return await this.juniorGradeRepository.findOneBy({id:id})
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -57,7 +57,7 @@ export class JuniorGradeService {
       return await this.juniorGradeRepository.save(grade);
      }
    } catch (error) {
-      throw new error;
+      throw error;
    }
   }
 
@@ -68,7 +68,7 @@ export class JuniorGradeService {
         return `Grade with the ID #${id} was deleted succesfully`;
       }
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 }
