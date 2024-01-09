@@ -44,7 +44,7 @@ export class TeachersService {
     try {
       return await this.teacherRepository.findOneBy({id:id});
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -60,7 +60,7 @@ export class TeachersService {
        }
       });
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -74,7 +74,7 @@ export class TeachersService {
       return await this.teacherRepository.save(teacher);
       
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -87,7 +87,7 @@ async updateTeacher(id: string, updateTeacherInput: UpdateTeacherInput): Promise
       return await this.teacherRepository.save(teacher);
     }
   } catch (error) {
-    throw new error;
+    throw error;
   }
 
 }
@@ -99,7 +99,7 @@ async updateTeacher(id: string, updateTeacherInput: UpdateTeacherInput): Promise
         return `Teacher with  the ID ${id} was deleted successfully`;
       }
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 }
