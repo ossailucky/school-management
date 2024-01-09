@@ -45,7 +45,7 @@ export class ParentsService {
     try {
       return await this.parentRepository.findOneBy({id:id});
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -71,7 +71,7 @@ export class ParentsService {
         }
       });
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -84,7 +84,7 @@ export class ParentsService {
         return await this.parentRepository.save(parent);
       }
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -95,7 +95,7 @@ export class ParentsService {
         return `Parent with  the ID ${id} was deleted successfully`;
       }
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 }
