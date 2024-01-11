@@ -34,14 +34,24 @@ export class StudentsService {
   }
 
   async getStudentData(student: StudentDTO): Promise<Student>{
-    const { email } = student;
+    try {
+      const { email } = student;
 
-    return await this.studentRepository.findOneBy({email:email});
+      return await this.studentRepository.findOneBy({email:email});
+    } catch (error) {
+      throw error;
+    }
+    
 
   }
 
   async getAllStudent(): Promise<Student[]> {
-    return await this.studentRepository.find();
+    try {
+      return await this.studentRepository.find();
+    } catch (error) {
+      throw error;
+    }
+    
   }
 
   async findOne(id: string): Promise<Student> {
