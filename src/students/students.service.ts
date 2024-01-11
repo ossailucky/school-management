@@ -45,7 +45,12 @@ export class StudentsService {
   }
 
   async findOne(id: string): Promise<Student> {
-    return await this.studentRepository.findOneBy({id:id});
+    try {
+      return await this.studentRepository.findOneBy({id:id});
+    } catch (error) {
+      throw error;
+    }
+    
   }
 
   async assignParentsToStudent(studentID: string, parentsID: string[]): Promise<Student> {
@@ -55,7 +60,7 @@ export class StudentsService {
        return this.studentRepository.save(student);
       
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -66,12 +71,13 @@ export class StudentsService {
        return this.studentRepository.save(student);
       
     } catch (error) {
-      throw new error;
+      throw  error;
     }
   }
 
   async getManyStudents(studentIds:string[]): Promise<Student[]>{
-    return await this.studentRepository.find({
+    try {
+      return await this.studentRepository.find({
         where: {
            
             id: {
@@ -80,6 +86,10 @@ export class StudentsService {
             }
         }
     })
+    } catch (error) {
+      throw error;
+    }
+    
 }
 
   async updateStudent(id: string, updateStudent: UpdateStudentInput): Promise<Student>{
@@ -91,7 +101,7 @@ export class StudentsService {
         return await this.studentRepository.save(student);
       }
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 
@@ -103,7 +113,7 @@ export class StudentsService {
       }
       
     } catch (error) {
-      throw new error;
+      throw error;
     }
   }
 }
