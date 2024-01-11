@@ -25,37 +25,56 @@ export class ClassRoomService {
   }
 
  async findAll(): Promise<ClassRoom[]> {
-    return await this.classRoomRespository.find();
+    try {
+      return await this.classRoomRespository.find();
+    } catch (error) {
+      throw error;
+    }   
   }
 
  async findOne(id: string): Promise<ClassRoom> {
+  try {
     return await this.classRoomRespository.findOneBy({id});
+  } catch (error) {
+    throw error;
+  }
+    
   }
 
   async assignStudentAClass(id:string,studentsId: string[]): Promise<ClassRoom>{
 
-
-    const classRoom = await this.classRoomRespository.findOneBy({id: id});
-
-
-    classRoom.students = [...classRoom.students, ...studentsId];
+    try {
+      
+      const classRoom = await this.classRoomRespository.findOneBy({id: id});
 
 
+      classRoom.students = [...classRoom.students, ...studentsId];
 
-    return await this.classRoomRespository.save(classRoom);
+
+
+      return await this.classRoomRespository.save(classRoom);
+    } catch (error) {
+      throw error;
+    }
+
+    
   }
 
   async assignSubjectsAClass(id:string, subjectsId: string[]): Promise<ClassRoom>{
 
-
-    const classRoom = await this.classRoomRespository.findOneBy({id: id});
-
-
-    classRoom.classSubjects = [...classRoom.classSubjects, ...subjectsId];
+    try {
+      const classRoom = await this.classRoomRespository.findOneBy({id: id});
 
 
+      classRoom.classSubjects = [...classRoom.classSubjects, ...subjectsId];
 
-    return await this.classRoomRespository.save(classRoom);
+
+
+      return await this.classRoomRespository.save(classRoom);
+    } catch (error) {
+      throw error;
+    }
+    
   }
 
   async updateClassRoom(id:string, updateClassRoom: UpdateClassRoomInput):Promise<ClassRoom> {
