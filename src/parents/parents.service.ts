@@ -52,11 +52,18 @@ export class ParentsService {
 
   async assignStudentsToParent(parentID: string, studentsID: string[]): Promise<Parents>{
 
-    const parent = await this.parentRepository.findOneBy({id: parentID});
+    try {
+      
+      const parent = await this.parentRepository.findOneBy({id: parentID});
 
-    parent.children = [ ...parent.children, ...studentsID];
+      parent.children = [ ...parent.children, ...studentsID];
 
-    return this.parentRepository.save(parent);
+      return this.parentRepository.save(parent);
+    } catch (error) {
+      throw error;
+    }
+
+    
 
   }
 
